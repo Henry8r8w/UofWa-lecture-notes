@@ -4,7 +4,7 @@
 
 
 [Programming System and Tools](https://courses.cs.washington.edu/courses/cse391/25wi/)
-- Be able to 
+- Being able to 
     - Read, write, and navigate commands in a Unix command-line shell.
     - Manage Unix file system concepts including permissions, groups, and users.
     - Chain Unix pipes and redirection for complex information management tasks.
@@ -46,7 +46,7 @@ Describe the basic organization of the memory hierarchy and the effect of its pa
 - Use modern tools and toolkits such as Observable, Tableau, p5.js, and Vega-Lite
 
 Professional Issues (for EE)
--To discuss a number of possible topics:
+- To discuss a number of possible topics:
     - After you graduate
     - Starting a job
     - Salary negotiation and realistic earning expectations
