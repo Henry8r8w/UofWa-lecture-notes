@@ -1,0 +1,236 @@
+---
+title: "Recitation1: R (swirl)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+This document reiterates the important lessons from the swirl course "R programming".
+
+First, install R and RStudio using the links in the syllabus. Second open RStudio. You will rarely need to open R itself, but RStudio uses your installation of R. Third, choose File, New Project, and create a project in the directory of your choice. This will be your “working directory”—you should put your data in this directory (or a subdirectory), and all files will be saved here.
+
+You can use R script files (File, New File, R Script) to save your (error-free) code.
+
+Some good lessons to practice are as follows:
+
+- 1: Basic Building Blocks
+- 3: Sequences of Numbers
+- 4: Vectors                
+- 6: Subsetting Vectors
+- 7: Matrices and Data Frames 
+- 12: Looking at Data
+- 9: Functions (the first half especially)
+
+Please keep in mind it is not mandatory to use R in this course.
+
+## 1. Basic Building Blocks
+
+In RStudio you will see certain panels: the console, the environment and files. The console is where the code runs. For example, you can write code directly into the console, hit enter and the code will run. For example
+
+```{r}
+5 + 7
+```
+
+You can also assign the values to some object by using ‘<-’
+
+```{r}
+x <- 5 + 7
+x
+y <- x - 3
+y
+```
+
+A vector of numbers is the simplest data structure in R. They can be created by the 'c()' function:
+```{r}
+# ?c
+z <- c(1.1, 9, 3.14)
+c(z, 555,  z)
+z * 2 + 100
+z * c(2, 2, 2) + c(100, 100, 100)
+my_sqrt <- sqrt(z - 1)
+my_sqrt
+my_div <- z/my_sqrt
+my_div
+c(1, 2, 3, 4) + c(0, 10)
+c(1, 2, 3, 4) + c(0, 10, 100)
+```
+
+Above we have: 
+
+- Looked up R's built-in help files via the `?` command.
+- Seen how R performs specified arithmetic operation (`+`, `-`, `*`, etc.) element-by-element.
+- Seen how R 'recycles' vectors.
+
+## 4. Vectors
+
+Above we created a vector of numbers (a "numeric vector"). Another type of vector is the "logical vector", which contains "true/false" information. For example, we can return true/false depending on if the number is less than 1.
+```{r}
+num_vect <- c( 0.5, 55, -10,  6)
+tf <- num_vect<1
+tf
+num_vect >= 6
+```
+
+Here are some (complicated) logical statements
+```{r}
+(3 > 5) & (4 == 4) 
+(TRUE == TRUE) | (TRUE == FALSE)
+((111 >= 111) | !(TRUE)) & ((4 + 1) == 5)
+```
+
+A third vector type contains "characters":
+```{r}
+c("My", "name", "is") -> my_char
+my_char
+```
+
+Character vectors are often used with the paste function:
+```{r}
+paste(my_char, collapse = " ")
+paste(1:3, c("X", "Y", "Z"), sep = "")
+```
+
+## 6. Subsetting
+
+Subsetting is important when only some elements are relevant. In R, subsetting occurs by using a logical vector inside square brackets:
+
+```{r}
+x <- c( NA, NA, NA, NA, NA, NA,  0.1416469,  0.5835647,  0.6249801, -1.7168059, 0.2295065,  0.3164563, NA, NA, NA, -2.2153293, NA, -0.7850284, -1.6878285, -1.2218555,2.4912774, NA, NA,  0.6100512,  0.6105755, 0.6130577,  0.7736417, -1.2376653,  0.7309674,  1.0643645,  NA, NA, NA, NA,NA,NA, NA, -0.5042185, NA,  0.9779947)
+x[1:10]
+x[is.na(x)]
+y <- x[!is.na(x)]
+```
+We have used subsetting to extract the non-missing values of x. Now let's get the positive elements of x
+```{r}
+y[y > 0]
+x[x>0]
+```
+
+Be careful to only subset valid elements, since R will not tell you that x has less than 3000 elements
+```{r}
+x[c(3, 5, 7)]
+x[3000]
+```
+
+We can also subset with negative numbers (all but these)
+```{r}
+x[c(-2, -10)]
+x[-c(2, 10)]
+```
+
+It is possible to "name" the elements of a vector. There are (at least) two ways to do so:
+```{r}
+vect <- c(foo = 11, bar = 2, norf = NA)
+vect
+names(vect)
+vect2 <- c(11, 2, NA)
+names(vect2) <- c("foo", "bar", "norf")
+identical(vect,vect2)
+```
+
+Subsetting by names is possible:
+```{r}
+vect["bar"]
+vect[c("foo", "bar")]
+```
+
+
+## 7. Matrices and data frames
+
+Matrices and data frames are rectangles. These are unlike vectors, which have no "dimensions" but still have length:
+```{r}
+my_vector <- 1:20
+dim(my_vector)
+length(my_vector)
+```
+
+We can turn a vector into a matrix by assigning it dimensions:
+```{r}
+dim(my_vector) <- c(4, 5)
+my_vector
+class(my_vector)
+```
+
+However, the standard way to create matrices is via the "matrix" function:
+```{r}
+my_matrix2 <- matrix(1:20, nrow=4, ncol=5)
+identical(my_vector, my_matrix2)
+```
+
+Now imagine that the numbers in our table represent some measurements from a clinical experiment, where each row represents one patient and each column represents one variable for which measurements were taken. In that case, we may want to name the rows, so we know who belongs to which data:
+```{r}
+patients <- c("Bill", "Gina", "Kelly", "Sean")
+cbind(patients, my_matrix2)
+```
+This is bad since it converted the numbers to words ('strings'). This is because matrices can only contain ONE class of data. Instead, we should use a data farme:
+
+```{r}
+my_data <- data.frame(patients, my_matrix2)
+my_data
+```
+
+Often, it makes sense to name the columns, so we know which variable is which:
+```{r}
+cnames <- c("patient", "age", "weight", "bp", "rating", "test")
+colnames(my_data) <- cnames
+my_data
+```
+
+## 12. Looking at data
+
+This lesson introduces some useful functions like the following:
+```
+my_data -> df
+ncol(df)
+nrow(df)
+names(df)
+head(df)
+head(df, 10)
+summary(df)
+table(df$variable)
+str(df)
+```
+
+## 9. Functions
+
+Above we used the c() function, here are some other simple functions:
+```{r}
+Sys.Date()
+mean(c(2, 4, 5))
+```
+
+In R, it is possible to write your own functions. For example
+```{r}
+boring_function <- function(x) {
+  x
+}
+boring_function('My first function!')
+boring_function
+```
+
+
+Here are some slightly more complicated ones:
+```{r}
+my_mean <- function(my_vector) {
+  sum(my_vector)/length(my_vector)
+}
+my_mean(c(4, 5, 10))
+remainder <- function(num, divisor = 2) {
+  num %% divisor
+}
+remainder(5)
+remainder(11, 5)
+remainder(divisor = 11, num = 5)
+remainder(4, div = 2)
+```
+
+Notice the above are functions of numbers. But it is possible to have functions of functions:
+```{r}
+evaluate <- function(func, dat){
+  func(dat)
+}
+evaluate(sd, c(1.4, 3.6, 7.9, 8.8))
+evaluate(function(x){x+1}, 6)
+evaluate(function(x){x[1]}, c(8, 4, 0))
+```

@@ -1,0 +1,466 @@
+---
+title: "R demo 2: replication"
+output: html_document
+
+---
+
+<style>
+  .col2 {
+    columns: 2 200px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 200px; /* chrome, safari */
+    -moz-columns: 2 200px;    /* firefox */
+  }
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In your writing project, you must use the "cleaned" files to replicate tables from a published economics paper. The cleaned files contain a stata file that has two steps:
+
+1. load data
+2. run regressions
+
+The regression output (or some subset of the output) will be a column in your table. The tricky part will be to understand the stata code so that you can recreate it in R or excel. This document intends to help you with this task by showing you how to replicate a table from a published economics paper.
+
+You will want to use the R function "felm", whose help page is here:
+https://www.rdocumentation.org/packages/lfe/versions/2.8-7/topics/felm
+
+
+At the end of this document there is a "Tips and hints" section.
+
+# Gonzalez 2012
+
+
+In this document, I will perform a replication of the paper "The Effect of a Universal Child Benefit on Conceptions,
+Abortions, and Early Maternal Labor Supply", by Libertad Gonzalez. I will replicate table 2 of the paper.
+
+The files "Gonzalez_cleaned.zip" are available in the shared drive. They contain three stata files:
+
+- table2_row1.dta
+- table2_row2.dta
+- tables.do
+
+The first two files contain the data, the do file contains the stata code.
+
+## The .do file
+
+The tables.do file is as follows
+
+```
+clear all
+
+use "table2_row1.dta", clear
+
+xi: reg ln post i.post|mc i.post|mc2 i.post|mc3 days if mc>-91 & mc<30, robust
+xi: reg ln post i.post|mc i.post|mc2 days if mc>-31 & mc<30, robust
+xi: reg ln post i.post|mc i.post|mc2 days if mc>-13 & mc<12, robust
+xi: reg ln post i.post|mc days if mc>-10 & mc<9, robust
+xi: reg ln post days if mc>-4 & mc<3, robust
+xi: reg ln post i.post|mc i.post|mc2 i.post|mc3 days i.month if mc>-91 & mc<30, robust /* 10 years */
+xi: reg ln post i.post|mc i.post|mc2 days i.month if mc>-67 & mc<30, robust /* 8 years */
+xi: reg ln post i.post|mc i.post|mc2 days i.month if mc>-31 & mc<30, robust /* 5 years */
+
+
+use "table2_row2.dta", clear
+
+xi: reg log_ive post i.post|m i.post|m2 i.post|m3 days, robust
+xi: reg log_ive post i.post|m i.post|m2 days if m>-31, robust
+xi: reg log_ive post i.post|m i.post|m2 days if m>-13 & m<12, robust
+xi: reg log_ive post i.post|m days if m>-10 & m<9, robust
+xi: reg log_ive post days if m>-4 & m<3, robust
+xi: reg log_ive post i.post|m i.post|m2 i.post|m3 days i.month, robust /* 10 years */
+xi: reg log_ive post i.post|m i.post|m2 days i.month if m>-67, robust /* 8 years */
+xi: reg log_ive post i.post|m i.post|m2 days i.month if m>-31, robust /* 5 years */
+```
+
+## Row 1, column 1
+
+The first step is to load the data.
+
+```{r echo=T, message=F}
+library(tidyverse)
+library(haven)
+require(stargazer)
+require(lfe)
+row1.data <- read_dta('./inputs/table2_row1.dta')
+row1.data
+```
+
+Now we need to try to understand the first regression. First, let's look at the paper. It "Table 2 reports the results from estimating equations (1) and (2), in eight different
+specifications." Equations (1) and (2) are:
+
+\begin{align}
+C_m =& \alpha + \gamma_1{m}+\gamma_2(m\cdot {post})+\beta\cdot{post}+\lambda{X}_m+\epsilon_m\\
+C_m =& \alpha + \gamma_1{m}+\gamma_2(m\cdot {post})+\beta\cdot{post}+\lambda{X}_m+\sum_{c=2}^{12}\mu_c{month}_m+\epsilon_m\\
+\end{align}
+
+The paper describes what each variable is.
+
+Once we work out what the variables mean, we could try regressing it on the first subsample. But first, let's make sure R recognizes that the $post$ variable is a dummy variable ($post$ indicates if the birth took place before or after the cutoff date.)
+
+```{r}
+row1.data$post <- factor(row1.data$post)
+```
+
+This means R will treat the variable as a dummy variable and not as a number. For the example in class (L7 slide 17), if the "region" variable was coded as $NE=1$, $MW=2$, $S=3$ and $W=4$, then setting ```factor(data$region)``` would ensure R realizes they are dummy variables (one for each region), rather than a number (ie. the regression on slide 17 vs the regression on slide 18).
+
+
+Now let's do the regression based on the equation above.
+
+```{r results='asis'}
+felm(ln ~ 1 + post + days + post*mc, data = row1.data, subset = which(mc>-91 & mc<30)) -> reg1
+stargazer(reg1, type='html', header=F, 
+          dep.var.labels = "Log number of conceptions per month",
+          covariate.labels = c("Post 1 July",
+                               "Days in month",
+                               "Month of birth for Post=0",
+                               "Month of birth for Post=1")
+          )
+```
+
+This doesn't match the table! (We are expecting 0.0514 on "post 1 July"). So let's look at the stata code:
+
+```
+xi: reg ln post i.post|mc i.post|mc2 i.post|mc3 days if mc>-91 & mc<30, robust
+```
+
+
+What does this mean? A good first step is to Google the first word "xi", to see what it means. Based on the help page at https://www.stata.com/manuals/rxi.pdf, it creates interaction terms. So
+
+```
+i.post|mc i.post|mc2 i.post|mc3
+```
+
+Creates the variables 
+\begin{eqnarray}
+pre\times{mc} &~~~~~& post\times{mc} &~~~~~& pre\times{mc2} &~~~~~& post\times{mc2} &~~~~~& pre\times{mc3} &~~~~~& post\times{mc3}
+\end{eqnarray}
+where $pre+post=1$---$pre$ indicating if birth was before the cutoff, $post$ indicating if it was after.
+
+The help page for felm says that we can create interactions by writing
+```
+post:mc
+```
+Great! Now lets try this regression:
+```{r results='asis'}
+felm(ln ~ 1 + post + days + post:mc, data = row1.data, subset = which(mc>-91 & mc<30)) -> reg1
+felm(ln ~ 1 + post + post:mc + post:mc2 + post:mc3 + days, data = row1.data, subset = which(mc>-91 & mc<30)) -> reg2
+stargazer(list(reg1, reg2), type='html', header=F, 
+          dep.var.labels = "Log number of conceptions per month"
+          # ,covariate.labels = c("Month of birth",
+          #                      "Post 1 July",
+          #                      "Days in month",
+          #                      "Interaction of month and post",
+          #                      "Interaction of month$\\^2$ and post",
+          #                      "Interaction of month$\\^3$ and post"
+                               # )
+          )
+```
+
+Looks good! The felm documentation shows that we can suppress the factors by writing the regression as follows:
+
+```{r results='asis'}
+felm(ln ~ 1 + post + days | post:mc + post:mc2 + post:mc3, data = row1.data, subset = which(mc>-91 & mc<30)) -> reg
+stargazer(reg, 
+          se=list(summary(reg, robust=T)$coeff[,2]),
+          type='html', header=F, 
+          dep.var.labels = "Log number of conceptions per month"
+          ,covariate.labels = c("Post 1 July",
+                               "Days in month")
+          )
+```
+
+We have also added heteroskedastic robust SE.
+
+## The rest of Row 1
+
+Now let's do the rest of Row 1:
+
+```
+xi: reg ln post i.post|mc i.post|mc2 days if mc>-31 & mc<30, robust
+xi: reg ln post i.post|mc i.post|mc2 days if mc>-13 & mc<12, robust
+xi: reg ln post i.post|mc days if mc>-10 & mc<9, robust
+xi: reg ln post days if mc>-4 & mc<3, robust
+xi: reg ln post i.post|mc i.post|mc2 i.post|mc3 days i.month if mc>-91 & mc<30, robust /* 10 years */
+xi: reg ln post i.post|mc i.post|mc2 days i.month if mc>-67 & mc<30, robust /* 8 years */
+xi: reg ln post i.post|mc i.post|mc2 days i.month if mc>-31 & mc<30, robust /* 5 years */
+```
+
+```{r results='asis'}
+col1 <- felm(ln ~ 1 + post + days | post:mc + post:mc2 + post:mc3, data = row1.data, subset = which(mc>-91 & mc<30))
+col2 <- felm(ln ~ 1 + post + days | post:mc + post:mc2, data = row1.data, subset = which(mc>-31 & mc<30))
+col3 <- felm(ln ~ 1 + post + days | post:mc + post:mc2, data = row1.data, subset = which(mc>-13 & mc<12))
+col4 <- felm(ln ~ 1 + post + days | post:mc, data = row1.data, subset = which(mc>-10 & mc<9))
+col5 <- felm(ln ~ 1 + post + days | 0, data = row1.data, subset = which(mc>-4 & mc<3))
+col6 <- felm(ln ~ 1 + post + days | post:mc + post:mc2 + post:mc3 + factor(month), data = row1.data, subset = which(mc>-91 & mc<30))
+col7 <- felm(ln ~ 1 + post + days | post:mc + post:mc2 + factor(month), data = row1.data, subset = which(mc>-67 & mc<30))
+col8 <- felm(ln ~ 1 + post + days | post:mc + post:mc2 + factor(month), data = row1.data, subset = which(mc>-31 & mc<30))
+row1 <- list(col1,col2,col3,col4,col5,col6,col7,col8)
+
+stargazer(row1, 
+          se=lapply(row1,function(x)
+            summary(x, robust=T)$coeff[,2]),
+          type='html', header=F, digits=4,
+          dep.var.labels = "Log number of conceptions per month"
+          ,covariate.labels = c("Post 1 July",
+                               "Days in month")
+          )
+```
+
+Notice:
+
+- We had to make $month$ a factor variable, since the author says there are "calendar month dummies". If we didn't do this, R would treat "month" as a number (ie. month 10 is bigger than month 5)
+
+## Row 2
+
+Now we have understood the syntax, row 2 is easy
+```
+xi: reg log_ive post i.post|m i.post|m2 i.post|m3 days, robust
+xi: reg log_ive post i.post|m i.post|m2 days if m>-31, robust
+xi: reg log_ive post i.post|m i.post|m2 days if m>-13 & m<12, robust
+xi: reg log_ive post i.post|m days if m>-10 & m<9, robust
+xi: reg log_ive post days if m>-4 & m<3, robust
+xi: reg log_ive post i.post|m i.post|m2 i.post|m3 days i.month, robust /* 10 years */
+xi: reg log_ive post i.post|m i.post|m2 days i.month if m>-67, robust /* 8 years */
+xi: reg log_ive post i.post|m i.post|m2 days i.month if m>-31, robust /* 5 years */
+```
+
+The R code is:
+
+```{r results='asis'}
+row2.data <- read_dta('./inputs/table2_row2.dta')
+row2.data$post <- factor(row2.data$post)
+
+col1 <- felm(log_ive ~ 1 + post + days | post:m + post:m2 + post:m3, data = row2.data, subset = which(m>-91 & m<30))
+col2 <- felm(log_ive ~ 1 + post + days | post:m + post:m2, data = row2.data, subset = which(m>-31 & m<30))
+col3 <- felm(log_ive ~ 1 + post + days | post:m + post:m2, data = row2.data, subset = which(m>-13 & m<12))
+col4 <- felm(log_ive ~ 1 + post + days | post:m, data = row2.data, subset = which(m>-10 & m<9))
+col5 <- felm(log_ive ~ 1 + post + days | 0, data = row2.data, subset = which(m>-4 & m<3))
+col6 <- felm(log_ive ~ 1 + post + days | post:m + post:m2 + post:m3 + factor(month), data = row2.data, subset = which(m>-91 & m<30))
+col7 <- felm(log_ive ~ 1 + post + days | post:m + post:m2 + factor(month), data = row2.data, subset = which(m>-67 & m<30))
+col8 <- felm(log_ive ~ 1 + post + days | post:m + post:m2 + factor(month), data = row2.data, subset = which(m>-31 & m<30))
+row2 <- list(col1,col2,col3,col4,col5,col6,col7,col8)
+
+stargazer(row2, 
+          se=lapply(row2,function(x)
+            summary(x, robust=T)$coeff[,2]),
+          type='html', header=F, digits=4,
+          dep.var.labels = "Log number of conceptions per month"
+          ,covariate.labels = c("Post 1 July",
+                               "Days in month")
+          )
+```
+
+
+Notice a couple of things:
+
+- Now the "month" variable is called "m" instead of "mc".
+- We had to set the dummy variables as factors, just like before.
+- There is a slight mismatch between my standard errors and the published standard errors!
+
+
+# Tips and hints
+
+The main task will be to translate the stata regressions into R. A typical Stata regression will look like this:
+```
+regress y x1 x2
+```
+Which means to regress ```y``` on ```(x1,x2)```.
+
+I suggest you use the R function felm to run linear regression. The general syntax for ```felm``` is explained on the felm help page under ```Details```. Type ```?felm``` to get to the help page. The general syntax is:
+```{r}`r ''`
+felm(y ~ x1 + x2 | f1 + f2 | (x3 + x4 ~ z3 + z4) | c1 + c2, data=my.data)
+```
+As explained on the help page:
+
+- ```x1``` and ```x2``` are exogenous covariates
+- ```f1``` and ```f2``` are categorical variables (called "factors" in ```R```), for which felm will create dummy variables for each level of the factor (for example: ```f1``` could be an industry category (mining, agriculture), felm will create a dummy for each category) (We will cover categorical variables and dummies in the "non-linear regression" lectures.)
+- In ```(x3 + x4 ~ z3 + z4)```, ```x3``` and ```x4``` are non-exogenous covariates, and ```z3``` and ```z4``` are instrumental variables (We will cover this in the instrumental variable lectures.)
+- ```c1``` and ```c2``` are cluster variables for creating standard errors (We will cover this in the panel lectures.)
+
+The next section translates the regression syntax you will encounter:
+
+
+## Regression syntax:
+The left column is Stata, the right is R
+
+<div class="col2">
+```
+reg y x1 x2
+```
+```
+reg y x1 if(x2==0 & x3==1)
+reg y x1 i.x2
+reg y x1 [aweight=x2]
+reg y x1 [pweight=x2]
+```
+```
+xi: reg y x1 i.x2*x3
+~
+```
+```
+reg y x1 i.x2##c.x3
+```
+```
+areg y x1, absorb(x2)
+```
+```
+ivreg y x1 (x2=x3)
+```
+```
+xtset id_var
+xtreg y x1 x2, fe
+xtivreg y x1 (x2 = x3), fe
+```
+```
+xtreg y x1 L(0/1).x2
+~
+~
+```
+```
+reg y x1 x2, robust
+~
+```
+```
+reg y x1 x2 x3, cluster(x2 x3)
+~
+```
+
+
+<!-- R STARTS HERE -->
+```{r}`r ''`
+felm(y ~ x1 + x2)
+```
+```{r}`r ''`
+felm(y ~ x1, subset = which(x2==0 & x3==1))
+felm(y ~ x1 + factor(x2))
+felm(y ~ x1, weight = x2)
+felm(y ~ x1, weight = x2)
+```
+```{r}`r ''`
+felm(y ~ x1 + x2:x3)
+felm(y ~ x1 | x2:x3)
+```
+```{r}`r ''`
+felm(y ~ x1 + factor(x2):x3)
+```
+```{r}`r ''`
+felm(y ~ x1 | x2)
+```
+```{r}`r ''`
+felm(y ~ x1 | 0 | (x2 ~ x3))
+```
+```{r}`r ''`
+~
+felm(y ~ x1 + x2 | id_var) 
+felm(y ~ x1 | id_var | (x2 ~ x3))
+```
+```{r}`r ''`
+felm(y ~ x1 + x2 + lag(x2, 1), data=
+ pdata.frame(my.data,index=c("ID.var", "time.var")))
+# lag is from the "plm" package
+```
+```{r}`r ''`
+reg1 <- felm(y ~ x1 + x2)
+summary(reg1, robust = T)
+```
+```{r}`r ''`
+reg1 <- felm(y ~ x1 + x2 + x3 | 0 | 0 | x2 + x3)
+summary(reg1, robust = T)
+```
+
+</div>
+
+### Variable lists in Stata
+
+- To avoid repitition, Stata defines lists by the following syntax, which can then be called:
+```
+local NAME1 x1 x2 x3
+global NAME2 x4 x5
+regress y `NAME1' `NAME2' x6
+```
+This is equivalent to writing
+```
+regress y x1 x2 x3 x4 x5 x6
+```
+
+
+### Dummy and categorical variables
+
+- Be sure to make your dummy and categorical variables are factors.
+- There are two ways to control for dummy variables using software:
+  1. Manually create a dummy variable for each level (eg. MidWest=1 if region=4, South=1 if region=3, \dots), and then include each dummy variable in the regression.
+  2. Tell your software the variable is a "factor", and the software will create the dummies for you.
+  
+It is much simpler to do 2, even if the Stata code takes option 1. If the author chose option 1, the data file will typically still have the factor variable---so you can take option 1, even if the authors take option 2. It will be easier to code if you find the factor variable and include it as $factor(\text{variable.name})$.
+
+### Defining new variables.
+
+In Stata and R:
+
+<div class="col2">
+
+```
+gen x1 = x2/2
+```
+```{r}`r ''`
+x1 <- x2/2
+```
+
+</div>
+
+
+### Not equals
+
+Sometimes you will want to subset based on which observations don't have $x1$ equal to 0, for example. This is how it is done in Stata and R:
+
+<div class="col2">
+
+```
+x1~=0
+```
+```{r}`r ''`
+x1!=0
+```
+</div>
+
+### Missing data
+
+In Stata missing data is indicated as follows:
+
+```
+x1==.
+```
+
+This means the observations that have missing values for the variable ```x1```. In R this would be written ```is.na(x1)```. 
+
+However, keep in mind it may not be necessary to manually exclude missing data, since the ```felm``` function will automatically drop observations with missing variables.
+
+### Dealing with the * syntax in Stata
+
+In Stata, you may see something like this:
+```
+reg y x1 begin*end x2
+```
+(Or with either begin or end missing.) This means that Stata will look through the variable names and include all that start with ```begin``` and end with ```end```. There is no equivalently simple way to include all such variables in R, so here are two options. First, you can use R to look up all the variables that match the pattern, and then manually include them in your formula. Here is the required code:
+```{r}`r''`
+vars.start <- colnames(my.data)[startsWith(colnames(my.data), "begin")]
+vars.start_and_end <- vars.start[endsWith(vars.start, "end")]
+print(vars.start_and_end)
+```
+You can then manually add the variable names in ```vars.start_and_end``` to your formula.
+
+Alternately, we can automate the writing of the formula
+```{r}`r''`
+reg.formula <- paste0("y ~ x1 ", 
+                  paste0(vars.start_and_end, collapse="+"),
+                  "x2")
+felm(as.formula(reg.formula), data=my.data)
+```
+Option two appears preferable if there are many variables that match ```begin*end```.
+
+### The - syntax in Stata
+Similar to ```*```, you may see ```-``` in Stata. For example, ```me1-me6```. This means all six variables from ```me1``` through ```me6```. The two options for handling ```*``` can be used to handle ```-```.
+
+
