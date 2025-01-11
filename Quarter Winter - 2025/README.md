@@ -3,7 +3,7 @@
 ### Course Objectives
 
 
-[Programming System and Tools](https://courses.cs.washington.edu/courses/cse391/25wi/)
+**[Programming System and Tools](https://courses.cs.washington.edu/courses/cse391/25wi/)**
 - Being able to 
     - Read, write, and navigate commands in a Unix command-line shell.
     - Manage Unix file system concepts including permissions, groups, and users.
@@ -13,7 +13,7 @@
     - Filter, substitute, and otherwise process string and text context.
     - Utilize git version control including merging across multiple branches.
 
-Causal Inference
+**Causal Inference**
 - Explain how economists think about causality in terms of counterfactual worlds and causal effects. Converse fluently in the language of causality in economics. This includes treatment,
 outcome and control variables, potential outcomes, treatment effects, and to be able to apply
 these general concepts to specific economic problems.
@@ -23,10 +23,10 @@ any specific economic setting.
 - Develop an intuitive understanding of methods that economists use for causal inference, and to explain how the methods can isolate causal effects. These include matching, difference-in-difference, synthetic controls, instrumental variables, and regression discontinuity design.
 - Differentiate between causal and statistical inference. Explain the importance of random sampling from a population. Explain what we can (and cannot) learn from a confidence interval, from machine learning
 
-Introduction to Digital Design
+**Introduction to Digital Design**
 - Introductory course in digital logic, Boolean algebra, combinational and sequential circuits, combinational and sequential logic design, and programmable logic devices
 
-[Hardware and Software Interface](https://courses.cs.washington.edu/courses/cse351/25wi/syllabus.html)
+**[Hardware and Software Interface](https://courses.cs.washington.edu/courses/cse351/25wi/syllabus.html)**
 - Describe the multi-step process by which a high-level program becomes a stream of instructions executed by a processor;
 Describe the basic organization of the memory hierarchy and the effect of its parameters on system performance;
 - Trace the execution of assembly code (x86-64), map the assembly to high-level language constructs, and write simple pieces of assembly programs;
@@ -37,7 +37,7 @@ Describe the basic organization of the memory hierarchy and the effect of its pa
 - Explain the basic role of an operating system in executing processes;
 - Identify some of the ways that computers and their design principles affect society today.
 
-[Data Visualzation (Dropped)](https://courses.cs.washington.edu/courses/cse412/25wi/)
+**[Data Visualzation (Dropped)](https://courses.cs.washington.edu/courses/cse412/25wi/)**
 - Understand the value of visualization
 - Critically evaluate visualizations and suggest improvements and refinements
 - Use principles of perception and graphic design to create effective visualizations
@@ -45,7 +45,7 @@ Describe the basic organization of the memory hierarchy and the effect of its pa
 - Conduct exploratory data analysis and transform data
 - Use modern tools and toolkits such as Observable, Tableau, p5.js, and Vega-Lite
 
-Professional Issues (for EE)
+**Professional Issues (for EE)**
 - To discuss a number of possible topics:
     - After you graduate
     - Starting a job
