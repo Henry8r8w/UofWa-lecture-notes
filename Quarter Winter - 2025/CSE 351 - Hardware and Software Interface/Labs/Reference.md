@@ -6,7 +6,7 @@ A new command: $ gcc -g -Wall -std=c18 -o lab0 lab0.c
 - `-Wall` says to print warnings (the W) for all types (the all) of potential problems
 - `-std=c18` says to use the C18 standard (the C language standard released in 2018)
 - `-o lab0` instructs the compiler to output the executable code to a file called lab0
-
+- use ./ to run your lab0
 ### ssh and scp
 - ssh: a secure porotcal to connect local machine to remote server (c:/usr/local $\to$ \[username@remotename~])
 - scp:to make secure copy of file between sever and local machine
