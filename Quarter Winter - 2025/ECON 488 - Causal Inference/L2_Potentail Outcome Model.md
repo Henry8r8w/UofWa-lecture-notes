@@ -1,3 +1,10 @@
+### RCM: Potential Outcomes
+
+
+### RCM: Setup
+RC has two key elements, variously named:
+- teatment/intervention/causeindepednetn variable
+- Outcome/reponse/depednetn variable
 
 
 ### Causality: RCM

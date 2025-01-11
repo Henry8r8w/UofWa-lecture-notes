@@ -1,9 +1,8 @@
 ---
-title: "R demo 2: replication"
+title: "Recitation 2: replication"
 output: html_document
 
 ---
-
 <style>
   .col2 {
     columns: 2 200px;         /* number of columns and width in pixels*/
@@ -83,7 +82,7 @@ library(tidyverse)
 library(haven)
 require(stargazer)
 require(lfe)
-row1.data <- read_dta('./inputs/table2_row1.dta')
+row1.data <- read_dta('table2_row1.dta')
 row1.data
 ```
 
@@ -229,7 +228,7 @@ xi: reg log_ive post i.post|m i.post|m2 days i.month if m>-31, robust /* 5 years
 The R code is:
 
 ```{r results='asis'}
-row2.data <- read_dta('./inputs/table2_row2.dta')
+row2.data <- read_dta('table2_row2.dta')
 row2.data$post <- factor(row2.data$post)
 
 col1 <- felm(log_ive ~ 1 + post + days | post:m + post:m2 + post:m3, data = row2.data, subset = which(m>-91 & m<30))
