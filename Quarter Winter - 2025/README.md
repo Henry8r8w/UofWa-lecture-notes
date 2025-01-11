@@ -24,7 +24,7 @@ Describe the basic organization of the memory hierarchy and the effect of its pa
     - Filter, substitute, and otherwise process string and text context.
     - Utilize git version control including merging across multiple branches.
 
-  **[Data Visualzation (Dropped)](https://courses.cs.washington.edu/courses/cse412/25wi/)**
+**[Data Visualzation (Dropped)](https://courses.cs.washington.edu/courses/cse412/25wi/)**
 - Understand the value of visualization
 - Critically evaluate visualizations and suggest improvements and refinements
 - Use principles of perception and graphic design to create effective visualizations
