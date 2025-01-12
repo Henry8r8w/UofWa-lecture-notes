@@ -28,7 +28,7 @@ ex. how many bytes are in long my_array[5]; ? 40
 
 ex. let char_array[0]  starts at the address 0x350, what would the address of char_Array[-2] be?
 
-- 0x350 - $(2*1) = = 3*16^2 +5*16^1 + 0 - (2*1)$ = 848 - 2 in decimal =  0x34E in hex
+- $0x350 - (2 \cdot 1) = = 3 \cdot 16^2 +5 \cdot 16^1 + 0 - (2 \cdot 1) = 848 - 2$ in decimal =  0x34E in hex
 - note: char takes up 1 byte (sizeof(char) = 1)
 
 ### Pointer Arithmetic
