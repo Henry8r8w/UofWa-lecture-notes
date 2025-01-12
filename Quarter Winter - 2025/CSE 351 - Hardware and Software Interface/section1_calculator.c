@@ -17,7 +17,7 @@ int main(int argc, char **argv)
     int a = atoi(argv[1]);
     int b = atoi(argv[3]);
 
-    // Grab the first character [0] of the third parameter [3]
+    // Grab the first character [0] of the third argument/ second parameter [2]
     char operator = argv[2][0];
 
     print_operation(a, operator, b);
@@ -46,14 +46,14 @@ void print_operation(int a, char operator, int b)
         case '%':
             if (b == 0){
                 printf("Modulo by 0 is not a valid input\n");
-                return;
+                return;// immediate exit
             }
             result = a % b;
             break;
         case '/':
             if (b ==0){
                 printf("Division of 0 is a not valid input\n");
-                return;
+                return;// immediate exit
             }
             result = a / b;
             break;
