@@ -36,6 +36,7 @@ Output:
 “I have two numbers: 1, 2”
 
 **Java vs. C Quick Comparison**
+
 Java:
 ```java
 public class Main {
@@ -80,9 +81,11 @@ Helpful Vim commands:
 - esc to exit current mode
 **Pro Tips**
 up/down arrows: search for recently used prompts
-● ctrl-R: search for prompts you may have used a long 
+
+ctrl-R: search for prompts you may have used a long 
 time ago by keyword
-● tab complete: complete a long file/directory name 
+
+tab complete: complete a long file/directory name 
 automatically
 
 **Using the terminal**
