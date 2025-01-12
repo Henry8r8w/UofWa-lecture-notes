@@ -15,22 +15,23 @@ int main() {
 }
 //output: Yo!
 ```
-question to think: How many bytes of memory are allocated for the string literal "CSE 351"?
+Question to think about: How many bytes of memory are allocated for the string literal "CSE 351"?
 - 6 + 2, becuase there are 6 divisible chracters with 1 space and the null terminator
 ### Arrays
 - def: sets of contiguous locations in memory that store the same type of data object
     - to declare: `type array_name[num]; `
     - the subscript notation: `array_name[n]`, which is actually access by *(array_name +n)
-        - recall: how poiner points to the first element (i:0), where led us still have n element still need to be dereferecned to access the n-th array
+        - recall: how pointer points to the first element (i:0), where led us still have n element still need to be dereferecned to access the n-th array
         - note: C does not check any bound, so there could be logical erros or bad memory access by default
 
 ex. how many bytes are in long my_array[5]; ? 40
 
 ex. let char_array[0]  starts at the address 0x350, what would the address of char_Array[-2] be?
-- 0x350 - (2*1) = = 3*16^2 +5*16^1 + 0 - (2*1) = 848 - 2 in decimal =  0x34E in hex
--note: char takes up 1 byte (sizeof(char) = 1)
 
-### Pointer Arithemtic
+- 0x350 - $(2*1) = = 3*16^2 +5*16^1 + 0 - (2*1)$ = 848 - 2 in decimal =  0x34E in hex
+- note: char takes up 1 byte (sizeof(char) = 1)
+
+### Pointer Arithmetic
  For `int *p1, *p2`(type*x, *y), `p1+1`  will evaluate to the stored address incremented by 1 (int = 4 bytes or long = 8 bytes) and p2-p1 will return the number (the distance) of ints/long between the two addresses
 
 ```c
