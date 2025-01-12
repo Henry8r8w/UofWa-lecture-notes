@@ -107,6 +107,7 @@ int main() {
 //output: 6
 ```
 but if we change x to NULL
+```c
 #include <stdio.h>
 
 int main() {
@@ -117,3 +118,4 @@ int main() {
   printf("y = %d\n", y); 
   return 0;
 }
+```
