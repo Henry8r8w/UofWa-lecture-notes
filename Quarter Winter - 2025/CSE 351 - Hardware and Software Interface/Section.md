@@ -79,6 +79,7 @@ Helpful Vim commands:
 - :q! quit without saving
 - :wq or :x save and quit
 - esc to exit current mode
+
 **Pro Tips**
 up/down arrows: search for recently used prompts
 
