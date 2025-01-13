@@ -4,8 +4,7 @@
 - negation procedure: - x = ~x +1 (-x is assigng by the negation of x and add one (negative signed))
 
 Question 1: Compute the decimal value of the 8-bit Two's Complement number 0xAA
-
-$0b 1010 1010 \to ~() \to 0b01010101 + 0b0001 \to 0b01010110 \to 2+ 4 + 16 + 64 = -86$
+- $0b 1010 1010 \to ~() \to 0b01010101 + 0b0001 \to 0b01010110 \to 2+ 4 + 16 + 64 = -86$
 
 ```c
 #include <stdio.h>
