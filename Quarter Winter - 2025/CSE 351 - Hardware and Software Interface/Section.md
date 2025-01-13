@@ -3,8 +3,8 @@
 gcc -Wall -g -std=c18 -o foo foo.c
 - `-W` turns on compiler warnings (all of them)
 - `-g`turns on debugging symbols
-- `-std` specifies which “standard” of C we are using
-- `-o`changes the name of the resulting executable (e.g., foo)
+- `-std = cXX` specifies which “standard” of C we are using
+- `-o` (aka. outfile) changes the name of the resulting executable (e.g., foo)
 - `foo.c` is the source file being compiled
 
 **C Workflow**
