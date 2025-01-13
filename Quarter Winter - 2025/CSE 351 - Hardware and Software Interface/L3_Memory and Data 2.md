@@ -1,6 +1,12 @@
-
-
-
+### In-Lecture Poll
+```c
+void main() {
+  int a[] = {0x5,0x10};
+  int* p = a;
+  p = p + 1; // move to next element
+  *p = *p + 1; // a{1} + 1
+}
+```
 ### C Strings
 - C does not explicity support string data type
     - they are actyakkt arrats if characters that are termianted by the null character (ex.'hi' -> 'h'| 'i' |'\0'), the \0, which evaluate to 0 and used in the context of *char and **char
