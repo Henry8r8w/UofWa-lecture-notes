@@ -1,12 +1,97 @@
+### Examining Data Representations
+Code to print byte representation of data
+- Treat any data type as a byte array by casting its address to 
+char*
+- has unchecked casts
+```c
+void show_bytes(char* start, int len) {
+  int i;
+  for (i = 0; i < len; i++)
+    printf("%p\t0x%.2hhX\n", start+i, *(start+i));
+  printf("\n");
+}
+
+void show_int(int x) {
+show_bytes((char*) &x, sizeof(int)); // we cast byte array as char*
+}
+
+int x = 123456; // 0x00 01 E2 40
+printf("int x = %d;\n", x);
+show_int(x);    // show_bytes((char *) &x, sizeof(int));
+
+int x = 123456;   
+0x7fffb245549c  0x40
+0x7fffb245549d  0xE2
+0x7fffb245549e  0x01
+0x7fffb245549f  0x00
+```
+
+printf legend:
+- Special characters:\t = Tab, \n = newline
+- Format specifiers: %p = pointer, 
+  - %.2hhX = 1 byte (hh) in hex (X), padding to 2 digits (.2)
+### Array in C
+- Declaration: int a[6] (type name[num(element)])
+  - indexing: &a[i] is the address of a[0] + i times of the element size in byte
+    - int*p;,p = a; | p[1] is equivalent to *(p+1) as we get 1 + 4 byte away column element from the pointer of a[0] row from both syntax
+- note: C has no bound checking, whcih could result in dirty write
+
+
+### Assignment in C
+- A variable is represented by a location
+- Declaration != initialization (initially holds random data)
+- int x, y;
+  - let x is at address 0x04 (03 | 27 | D0 |3C) and y is at 0x18 (00 | 27 | D0 | 3C)
+
+- left-hand side = right-hand side;
+  - lhs must evaluate to a location
+  - rhs must evaluate to a value (this could be an address)
+  - store rhs `value` to lhs `location`
+- x = 0;
+- y = 0x3CD02700 (little endian)
+- x = y +3;
+  - get value at y, add 3, store in x
+- int* z = &y + 3
+  - get address of y 'add three', store in z
+  - z = 0x18 + 3(4)_{dec} = $1 \cdot 16^1 + 8\cdot16^0 + 12 = 36 \to 2 \cdot 16^1 + 4 \cdot 16^0 = 0x24$
+
+- *z = y 
+  - this also get a pointer z of location (0x24) and store the value of y
+
+### Addresses and Pointers in C
+- & = 'address of' operator
+- * = 'value at address' or 'dereference' operator
 ### In-Lecture Poll
+what woulld a[0], a[1] and p  be after the execution?
 ```c
 void main() {
-  int a[] = {0x5,0x10};
-  int* p = a;
-  p = p + 1; // move to next element
+  int a[] = {0x5,0x10}; 
+  int* p = a; // p points to the array address; array address pointer need not &; 0x100
+  p = p + 1; // move p to next element
   *p = *p + 1; // a{1} + 1
 }
 ```
+- a[0] = 0x5, a[1] = 0x11, p = 0x104
+  - int increment by n*4 byte
+
+which of the {x+10, p +10, &x + 10, *(&p), ar[1], &ar[2]} evaluate to an address? 
+
+and
+
+How much space does the varaible p take up?
+
+```c
+int x = 351;
+char* p = &x;
+int ar[3];
+```
+- p + 10, &x + 10, &ar[2], *(&p)
+  - note: derefering an pointer (&p) to p give us &x
+- p takes up 8 bytes (irelvenat to the delcared type), but instead depedn on the bit system (64 vs 32)
+
+---
+
+
 ### C Strings
 - C does not explicity support string data type
     - they are actyakkt arrats if characters that are termianted by the null character (ex.'hi' -> 'h'| 'i' |'\0'), the \0, which evaluate to 0 and used in the context of *char and **char
