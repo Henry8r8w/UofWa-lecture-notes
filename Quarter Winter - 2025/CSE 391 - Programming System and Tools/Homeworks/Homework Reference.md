@@ -1,25 +1,31 @@
 ### Hw1 - Basic Unix Shell Commands
 
-Task1: log in to calgary
+**Task1: log in to calgary server**
 - open terminal
 - set up ssh key for CSE gitlab
 
-Task 2: Downaload homework files on calgary
+**Task 2: Downaload homework files on calgary**
 - mkdir cse391
 - cd cse391
-- use the following command to grab the homeowrk files: git archive --remote=git@gitlab.cs.washington.edu:cse391/25wi/hw1.git --prefix=hw1/ HEAD | tar -x
+- use the following command to grab the homeowrk files: `git archive --remote=git@gitlab.cs.washington.edu:cse391/25wi/hw1.git --prefix=hw1/ HEAD | tar -x`
 
-Task 3: Edit text in the terminal using vim
-- refer to task3.txt
+**Task 3: Edit text in the terminal using vim**
+
+Refer to task3.txt
 
 1.From the hw1 directory, how do you open animals.txt in vim?
+
 2.Practice moving your cursor around the file. Move your cursor up, down, left and right. Assuming your cursor is at the beginning of the first line of the file, what are the keystrokes to move your cursor to the end of the line and append the text "animal"?
+
 3.Next, what are the keystrokes to move your cursor back to the front of the line and insert the word "animal"?
+
 4.How do you save your changes to the file?
 5.How do you exit the file and return back to your command line prompt in the shell?
 
-Task4: Linux Bash Shell commands
-- refer to task4.sh
+
+**Task4: Linux Bash Shell commands**
+
+Refer to task4.sh
 
 1. Copy the file MyProgram.java from the current directory to the java subdirectory.
 2. List the files in the current directory, in “long listing format”.
