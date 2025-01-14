@@ -1,4 +1,8 @@
-## Lab0
+## Lab 1a: Pointers in C
+
+
+
+## Lab0: warm up & get ready with linux
 To compile your c code, you will use gcc
 
 A new command: $ gcc -g -Wall -std=c18 -o lab0 lab0.c
