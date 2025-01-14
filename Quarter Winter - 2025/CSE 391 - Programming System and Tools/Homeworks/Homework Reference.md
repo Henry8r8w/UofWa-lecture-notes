@@ -1,4 +1,4 @@
-### Hw1 - Basic Unix Shell Commands
+## Hw1 - Basic Unix Shell Commands
 
 **Task1: log in to calgary server**
 - open terminal
