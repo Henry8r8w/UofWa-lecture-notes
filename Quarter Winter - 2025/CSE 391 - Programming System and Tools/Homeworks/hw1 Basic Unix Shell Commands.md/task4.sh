@@ -28,7 +28,7 @@ function problem4 {
 
 function problem5 {
   # Type your answer to problem #5 below this line
-  rm {diff.html, diff.css}
+  rm {diff.html,diff.css}
 }
 
 function problem6 {
@@ -38,12 +38,12 @@ function problem6 {
 
 function problem7 {
   # Type your answer to problem #7 below this line
-  rm *.{html, css}
+  rm *.{html,css}
 }
 
 function problem8 {
   # Type your answer to problem #8 below this line
-  cp *. java/
+  cp *.txt java/
 }
 
 function problem9 {
