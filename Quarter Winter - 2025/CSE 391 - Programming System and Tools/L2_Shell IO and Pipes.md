@@ -1,3 +1,36 @@
+## Demo
+```
+// say you retook a class (spring, summer 2025) and you want to compare the difference in the materials
+
+echo diff s{p,u}25/materials
+
+// To submit your homework onto gradescope from linux, instead scp your file to ur local machine then upload to gradescope
+
+// To get yourself into the parent folder when lost
+cd ~ or cd
+
+// Say, you have a Hello World folder created by mkdir "Hello Word" and you want to access it
+cd Hello\ World or cd 'Hello World'
+
+// To remove duplicate, you always need to sort beforehand
+sort | uniq
+
+// to word count everything, including the hidden files
+ls -al .. | wc -l
+
+```
+HW2 tips
+- use echo, cat command to see your arguments/ file contnets
+- If infty loop encouneted, check your stdin
+
+git archive --remote=git@gitlab.cs.washington.edu:cse391/25wi/lectures.git --prefix=lec3/ HEAD:3/ | tar -x
+
+note: tar archive format need to be unarchive by tar, which unzip line by line (instea of reading the whole file before 'unzip')
+
+
+Question: what is difference between grep "a" letters.txt and cat letters.txt | grep "a"
+
+- There is a no differnece in the result, but the process is difference: grep opens a file and read its content and highlight the "searchword", so using a pipe for the grep, you are essentially getting a stdin for the grep and the grep reads inputs that are presented and not opening any file
 
 ## Pipes
 - unlike IO redirection, command < file/ command > file, we use command | command
@@ -62,6 +95,9 @@ If you want to do append instead of overwritting, you will use >> and << instead
 - your input comes as file
 
 Refer to SimpleGrep.java for for tryout to see the difference
+
+#TODO: this std io vs param still need soem reenforcement
+
 ## More Unix commands
 - it is always a good practice to use `clear` to clean your terminal look
 

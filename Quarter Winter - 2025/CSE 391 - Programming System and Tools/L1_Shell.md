@@ -1,3 +1,7 @@
+### HW1 
+log in to your ssh usernetid@calgary.cs.
+git archive --remote=git@gitlab.cs.washington.edu:cse391/25wi/lectures.git --prefix=lec1/ HEAD:1/ | tar -x
+
 ### Vim basics
 
 | Key stroke | Description                          |
