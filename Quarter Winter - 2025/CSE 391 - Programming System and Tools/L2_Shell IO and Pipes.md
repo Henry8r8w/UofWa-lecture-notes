@@ -61,7 +61,7 @@ Refer to SimpleGrep.java for for tryout to see the difference
 
 - use `less` file.txt, you can view a large file both forward and backward; `more` is less better than less, for it is slower
 
--`wc` prints line, words counts, character counts/ bytes, filename.ending
+- `wc` prints line, words counts, character counts/ bytes, filename.ending
     - flag: -l will allow you only display the word count
 - 'sort' filepath, you can sorts items in the file
 
