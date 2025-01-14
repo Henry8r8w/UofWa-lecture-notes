@@ -35,7 +35,7 @@ Refer to task4.sh
 6. Set the file MyProgram.java to have a last-modified date of January 1, 2020, 4:15am. When consulting the man page for touch, the last-modified date is often called a “timestamp” or “STAMP”. Remember that Linux is case-sensitive when you are specifying file or directory names.
 7. List all files with the extension .html or .css in the current directory. The ls command can accept more than one parameter for listing files. Use a * (asterisk) as a wildcard character to specify a group of files. For example, *foo means all files whose names end with foo, and foo* means all files whose names begin with foo. You can use a wildcard in the middle of a file name, such as foo*bar for all files that start with foo and end with bar.
 8. Copy all text files (ending with .txt) from the current folder to the java subdirectory.
-9.Using the diff command, output the differences between lyrics.txt and lyrics2.txt. Note that line differences from the first file argument begin with a left-pointing caret < and line differences from the second file argument begin with a right-pointing caret >. The autograder is picky about the order you provide lyrics.txt and lyrics2.txt to the diff command.
-10.Display the contents of the file lyrics.txt.
-11.Display the contents of all files whose names begin with song and end with the extension .txt (e.g., song1.txt and song2.txt).
-12.Display only the first 7 lines of the file animals.txt. The head and tail commands output only the first or last few lines (respectively) of a file to the terminal.
+9. Using the diff command, output the differences between lyrics.txt and lyrics2.txt. Note that line differences from the first file argument begin with a left-pointing caret < and line differences from the second file argument begin with a right-pointing caret >. The autograder is picky about the order you provide lyrics.txt and lyrics2.txt to the diff command.
+10. Display the contents of the file lyrics.txt.
+11. Display the contents of all files whose names begin with song and end with the extension .txt (e.g., song1.txt and song2.txt).
+12. Display only the first 7 lines of the file animals.txt. The head and tail commands output only the first or last few lines (respectively) of a file to the terminal.
