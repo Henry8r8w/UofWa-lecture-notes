@@ -8,7 +8,7 @@
 
 function problem1 {
   # Type your answer to problem #1 below this line
-  mv MyProgram.java java/
+  cp MyProgram.java java/
 }
 
 function problem2 {
@@ -28,17 +28,17 @@ function problem4 {
 
 function problem5 {
   # Type your answer to problem #5 below this line
-  rm {diff.html,diff.css}
+  rm diff.html diff.css
 }
 
 function problem6 {
   # Type your answer to problem #6 below this line
-  touch -t 202001010415 MyProgram.java
+  touch -t 202001010415.00 MyProgram.java
 }
 
 function problem7 {
   # Type your answer to problem #7 below this line
-  rm *.{html,css}
+  rm *.html *.css
 }
 
 function problem8 {
