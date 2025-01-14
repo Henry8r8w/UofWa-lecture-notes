@@ -1,6 +1,6 @@
 
 ---
-### Input and Output Redirection
+## Input and Output Redirection
 **Standard Streams**
 - stdin (input), stdout (output), stderr (error)
     - the java correspondance: System.in, System.out, System.err
@@ -47,7 +47,7 @@ If you want to do append instead of overwritting, you will use >> and << instead
 - your input comes as file
 
 Refer to SimpleGrep.java for for tryout to see the difference
-### More Unix commands
+## More Unix commands
 - it is always a good practice to use `clear` to clean your terminal look
 
 `cat` command is also availble for one trying to pass-in a path, where you will see the concatenate result of what it inside the directory
