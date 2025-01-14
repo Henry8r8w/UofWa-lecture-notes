@@ -42,4 +42,4 @@ Each lab will inherit lab files from pervious labs (L1 - L7), execpet Lab 8, whi
 
 ### Lab files Created and Modified:
 **Lab1**
-- mux_2_1.sv, mux_2_1.do, mux_4_1.sv, mux_4_1.do, DE1_SOC.sv
+- mux_2_1.sv, mux_2_1.do, mux_4_1.sv, mux_4_1.do, DE1_SoC.sv
