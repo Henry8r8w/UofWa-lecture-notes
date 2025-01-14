@@ -14,7 +14,7 @@ A new command: $ gcc -g -Wall -std=c18 -o lab0 lab0.c
 ### ssh and scp
 - ssh: a secure porotcal to connect local machine to remote server (c:/usr/local $\to$ \[username@remotename~])
 - scp:to make secure copy of file between sever and local machine
-    - At the remote server: scp username@remotename:filepath /local/machine/filepath
+    - At  local machine: scp username@remotename:filepath /local/machine/filepath
         - /local/machine/filepath: . copies to cwd (or ./subfolder), .. copies to pd, else specifies your absolute path
     - At your local machine: scp /local/machine/filepath username@remotename:fielpath
 
