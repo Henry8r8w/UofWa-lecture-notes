@@ -1,0 +1,102 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/henry/OneDrive/Desktop/Lab Setup - 271/Lab Files - Root/L1 - getting started and mux
+vmux2_1
+Z0 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+Z1 !s110 1736862812
+!i10b 1
+!s100 kjXKA>1zg8jZCjz_TN:^m1
+I5EBA=BEg_]G^HKI1]jOD81
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 !s105 mux2_1_sv_unit
+S1
+Z4 dC:/Users/henry/OneDrive/Desktop/Lab Setup - 271/Lab Files - Root/L1a - mux4_1
+Z5 w1736861854
+Z6 8./mux2_1.sv
+Z7 F./mux2_1.sv
+L0 3
+Z8 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z9 !s108 1736862812.000000
+Z10 !s107 ./mux2_1.sv|
+Z11 !s90 -reportprogress|300|./mux2_1.sv|
+!i113 1
+Z12 tCvgOpt 0
+vmux2_1_testbench
+R0
+R1
+!i10b 1
+!s100 X79ZnGY7V5@7N6P1JQfcb1
+IffXjzAaeZ9m7kOUmnAX8N0
+R2
+R3
+S1
+R4
+R5
+R6
+R7
+L0 11
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 1
+R12
+vmux4_1
+R0
+R1
+!i10b 1
+!s100 Ec4e=KiHHUn@d39<?fh=A0
+I>^bGWSIo24VS6^Acej4R32
+R2
+Z13 !s105 mux4_1_sv_unit
+S1
+R4
+Z14 w1736861563
+Z15 8./mux4_1.sv
+Z16 F./mux4_1.sv
+L0 1
+R8
+r1
+!s85 0
+31
+R9
+Z17 !s107 ./mux4_1.sv|
+Z18 !s90 -reportprogress|300|./mux4_1.sv|
+!i113 1
+R12
+vmux4_1_testbench
+R0
+R1
+!i10b 1
+!s100 id9bSOO_:k:RP0K@F`Hf<2
+I0863l2:1;5n>9M4Q5_1e20
+R2
+R13
+S1
+R4
+R14
+R15
+R16
+L0 13
+R8
+r1
+!s85 0
+31
+R9
+R17
+R18
+!i113 1
+R12
