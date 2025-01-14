@@ -18,7 +18,7 @@ function problem2 {
 
 function problem3 {
   # Type your answer to problem #3 below this line
-  ls -lar /var
+  ls -l -a -r /var
 }
 
 function problem4 {
