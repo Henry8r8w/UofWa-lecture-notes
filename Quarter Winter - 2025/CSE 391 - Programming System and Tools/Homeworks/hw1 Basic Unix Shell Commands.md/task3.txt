@@ -9,4 +9,4 @@
 5. :w
 6. esc, then :q
 
-note: to combine write and quit at the same time, use :wq; if it were to force quit and no svae, use :q!
+# note: to combine write and quit simultaneously, use :wq; if it were to force quit and no save, use :q!
