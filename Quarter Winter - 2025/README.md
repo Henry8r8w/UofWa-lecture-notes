@@ -42,7 +42,7 @@ any specific economic setting.
 - Develop an intuitive understanding of methods that economists use for causal inference, and to explain how the methods can isolate causal effects. These include matching, difference-in-difference, synthetic controls, instrumental variables, and regression discontinuity design.
 - Differentiate between causal and statistical inference. Explain the importance of random sampling from a population. Explain what we can (and cannot) learn from a confidence interval, from machine learning
 
-**Introduction to Digital Design**
+**Digital Circuits and Systems**
 - Introductory course in digital logic, Boolean algebra, combinational and sequential circuits, combinational and sequential logic design, and programmable logic devices
 
 
