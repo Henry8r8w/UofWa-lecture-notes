@@ -70,14 +70,6 @@ command: uname
 ```
 $ ls -al dir1 (command: list -flag:all argument:directory1)
 ```
-### Live demo
-```
-
-
-
-
-```
-
 
 ### Why Unix & Linux
 -  light weight program sovle big problems
