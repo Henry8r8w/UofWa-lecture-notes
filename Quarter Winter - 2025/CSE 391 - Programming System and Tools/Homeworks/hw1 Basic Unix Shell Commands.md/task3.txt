@@ -5,7 +5,7 @@
 1. vim animals.txt, then press i 
 2. -> key or $
 3. <- key or 0
-animal (0 and typed animal) 4. 
+4. animal (0 and typed animal) 
 5. :w
 6. esc, then :q
 
