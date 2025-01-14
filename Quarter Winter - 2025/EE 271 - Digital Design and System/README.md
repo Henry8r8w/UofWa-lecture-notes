@@ -4,6 +4,7 @@ and execute the exe files; install the clycone device option when selecting your
     - note: it is likley that you'll get two modelsim (where one overwrites the another), as quartus installation already comes along with the modelsim installation
 
 #### Directory Tree View
+```
 Lab Setup - EE271/
 ├── README.md
 ├── ModelSim.exe
@@ -26,6 +27,7 @@ Lab Setup - EE271/
 .   .   .   .
 .
 .
+```
 - Based on lab assignment requirement, lab#a could be created , which inherits the work from lab# to build a more complex system
 
 #### Lab files oragnization
