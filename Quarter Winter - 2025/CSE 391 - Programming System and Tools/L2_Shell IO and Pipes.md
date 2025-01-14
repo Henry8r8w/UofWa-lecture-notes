@@ -1,5 +1,20 @@
 
----
+## Pipes
+- unlike IO redirection, command < file/ command > file, we use command | command
+- ex.  grep "berry" fruits.txt | wc -l
+    - this would get us the word count of thethe items containing 'berry' 
+note: it's common to have the second pipe command overwrite the first one; to use pipe, you always need a standard input
+```
+grep "a" berries.txt | grep "e" berries.txt // nope, this only give us items with e in berries, which is all
+
+grep "a" berries.txt | grep "e" // yes, becuase our grep 'e' receive standard input from the first one; so we filtered out berries items with a and e letter
+```
+- if you used > in the case of grep "e", it is to say taht you'r asking the output of grep "a" berries.txt to write a file named grep and "e"
+
+Say, we want to count berries but we know that there are defintely duplicates, what do we do 
+```
+sort berrties.txt |uniq| wc -l // use uniq command
+```
 ## Input and Output Redirection
 **Standard Streams**
 - stdin (input), stdout (output), stderr (error)
@@ -61,7 +76,7 @@ Refer to SimpleGrep.java for for tryout to see the difference
 
 - use `less` file.txt, you can view a large file both forward and backward; `more` is less better than less, for it is slower
 
-- `wc` prints line, words counts, character counts/ bytes, filename.ending
+- `wc` (word count) prints line, words counts, character counts/ bytes, filename.ending
     - flag: -l will allow you only display the word count
 - 'sort' filepath, you can sorts items in the file
 
