@@ -3,7 +3,7 @@
 and execute the exe files; install the clycone device option when selecting your device
     - note: it is likley that you'll get two modelsim (where one overwrites the another), as quartus installation already comes along with the modelsim installation
 
-#### Directory Tree View
+### Directory Tree View
 ```
 Lab Setup - EE271/
 ├── README.md
@@ -30,7 +30,7 @@ Lab Setup - EE271/
 ```
 - Based on lab assignment requirement, lab#a could be created , which inherits the work from lab# to build a more complex system
 
-#### Lab files oragnization
+### Lab files oragnization
 Each lab will inherit lab files from pervious labs (L1 - L7), execpet Lab 8, which is a personal project lab
 
 ### Lab Workflow (within the `L# - description`)
