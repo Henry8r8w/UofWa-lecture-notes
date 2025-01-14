@@ -38,7 +38,7 @@ function problem6 {
 
 function problem7 {
   # Type your answer to problem #7 below this line
-  rm *.html *.css
+  ls *.html *.css
 }
 
 function problem8 {
