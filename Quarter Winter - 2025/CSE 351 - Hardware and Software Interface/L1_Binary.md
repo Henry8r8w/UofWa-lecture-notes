@@ -1,6 +1,6 @@
 ### Numerical Encoding
 - $d \cdot b^{i}$
-- In base b, using a fixed width of x digits will allow you to represent at most $b^x$ things
+- In base b, using a fixed width of n digits will allow you to represent at most $b^n$ things
 - Examples: With 3 bits, we can represent at most $2^3$ things, corresponding to the numerals 0b000, 0b001, 0b010, 0b011, 0b100, 0b101, 0b110, and 0b111
 ### Binary Encoding - Files and Programs
 At the lowest level, all digital data is stored as bits!

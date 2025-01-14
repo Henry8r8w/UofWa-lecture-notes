@@ -1,6 +1,10 @@
 ### Endianess
 
-Endianness only applies to memory storage
+In a computer, data are moved and manipulated in a *fixed-lentgh chunks*. meaning that leading zeros may be required to represent the full extent of the data
+- the left most bit is referred as the **most-significant bit (MSB)**
+- the right most bit is referred the **least-significant bit (LSB)**
+
+Endianness only applies to memory storage, as multibyte data in memory span multiple addresses
 
 Often programmer can ignore endianness because it 
 is handled for you
@@ -15,6 +19,7 @@ you stored it (e.g. store int, access byte as a char)
 - Manual translation to and from machine code (in 351)
 
 
+
 ### Byte Ordering (Review)
 #TODO: insert draw.io
 How should bytes within a word be ordered in 
@@ -26,21 +31,35 @@ By convention, ordering of bytes called endianness
 - The two options are big-endian and little-endian
 
 Big-endian (SPARC, z/Architecture)
-- Least significant byte has highest address
+- Least significant byte (verify by checking the hex) has highest address
 Little-endian (x86, x86-64)
-- Least significant byte has lowest address
+- Least significant byte (verify by checking the hex)  has lowest address
 Bi-endian (ARM, PowerPC)
 - Endianness can be specified as big or little
+
+Note:  leftmost lowest memory address/element value, vice versa
+
+Question1: If we store the value 2 in 4 bytes at address `0x30` on a little-endian machine, what is the address of the byte `0x02`
+- 0x30
+
+Question2: Assume that a snippet of memory is shown below (in hex), starting with the byte at address 0x10 on a little-endian machine
+```
+addr:  0x10  0x11  0x12  0x13  0x14  0x15  0x16  0x17
+data:  | 77 | AB | 69 | CA | 0D | F0 | 12 | BE |
+```
+What is the value of the hosrt stored at address `0x14`?
+
+- 0xF00D since we are ordering by little-endian with a 2 byte short starting from 0x14
 
 ### Addresses and Pointers
 - An address refers to a location in memory
 - A pointer is a data object that holds an address
-    - Address can point to any type of data
+    - Address can point to any type of data (e.g., values, addresses)
 
 Say, you have a value 504 stored at address 0x08
-- 504_{10} = 1F8_{16} hex by (((504%16) %16)&16)((504%16) %16)(504 % 16)
-- your pointer stored at 0x38 points to address 0x08
-    -note: you pointer can also be pointed by another pointer
+- 504_{10} = 1F8_{16} hex by (int((504%16) // 16) % 16)(int(504 // 16) %16)(504 % 16)
+
+- note: for any %16 of above 9, you must report the alphabet of the hex
 ### A Picture of Memory (64-bit view)
 
 Memory Layout (One Word = 8 Bytes):
@@ -63,6 +82,7 @@ Memory Layout (One Word = 8 Bytes):
     - Each column in the row (cell) represents one byte within that word.
     - It is often to use hex (base 16) to represent address
 
+- Every address is then of the form 0b____, with each space/blank being either a 0 or a 1. We can see that there are $2^4 = 16$ total addresses (0b0000, 0b0001, 0b0010,..., 0b1110, 0b1111), and each one refers to 1 byte of data , so this address space will be 16 bytes
 
 ### Alignment of Multibyte Data
 The address of a chunk of memory is considered aligned if its address is a multiple of its size
@@ -71,8 +91,8 @@ The address of a chunk of memory is considered aligned if its address is a multi
 Addresses still specify locations of bytes in memory, but we can choose to view memory as a series of chunks of fixed-sized data instead
 - Addresses of successive chunks differ by data size
 
-The address of any chunk ofmemory is given by the address of the first byte (the lateral concatenated chunks attribute none to the address)
-- To specify a chunk of memory, need both its **address** and its **size**
+The address of any chunk of memory is given by the address of the first byte (the lateral concatenated chunks attribute none to the address); we usally check on the MSB and LSB to refer to data along with size information
+-  Thus, to specify a chunk of memory, need both its **address** and its **size**
 
 ### Data Representations
 Size of data types in bytes
@@ -123,6 +143,9 @@ But not all values fit in a single byte (e.g. 351 ->101011111), a group of 8 bit
 - A group of 4 bits (1 hex digit) is called a nibble
 - A group of 8 bits (2 hex digits) is called a byte
 
+Given b^n as your encoding size where b is the base and n is the num of bit representation, you should notice 
+- b is in range of symbol with [0: b -1]
+- n is the number of X in the 0bXXX (in this case, n = 3)
 ### Fixed-Length Binary (Review)
 -Becasue storage is finite in reailty, everything is stored as 'fixed' length
     - Data is moved and manipulated in fixed-length chunks
@@ -131,7 +154,8 @@ But not all values fit in a single byte (e.g. 351 ->101011111), a group of 8 bit
 Example:
 - eight bit: 0b00000100, where hte bit[7] is the Most Siginifcnat Bit (MSB) and bit[0] is the Least Signifncant Bit (LSB)
 - $\text{MSB} \rightarrow 0000 0000 0000 0101_{2} \leftarrow \text{LSB}$
-- If we store the 4-byte data 0xA1B2C3D4 at address 0x100
+
+Example: if we store the 4 byte-data `0xA1B2C3D4` at address `0x100`
 Big-endian:
 
 | Address  | 0x100 | 0x101 | 0x102 | 0x103 |
@@ -154,7 +178,8 @@ To execute an instruction, the CPU must:
 More CPU details:
 - Instructions are held temporarily in the instruction cache
 - Other data are held temporrairly in registers
-# TODO: insert draw.io for cpu -> memory
+
+#TODO: insert draw.io for cpu -> memory
 ### Memory, Data, and Addressing
 Representing information as bits and bytes
 - Memory is a byte-addressable array
