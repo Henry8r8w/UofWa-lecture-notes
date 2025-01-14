@@ -18,7 +18,7 @@ function problem2 {
 
 function problem3 {
   # Type your answer to problem #3 below this line
-  ls -a /var
+  ls -lar /var
 }
 
 function problem4 {
@@ -33,7 +33,7 @@ function problem5 {
 
 function problem6 {
   # Type your answer to problem #6 below this line
-  touch -t 20200110415 MyProgram.java
+  touch -t 202001010415 MyProgram.java
 }
 
 function problem7 {
@@ -63,5 +63,5 @@ function problem11 {
 
 function problem12 {
   # Type your answer to problem #12 below this line
-  head -7 animal.txt
+  head -7 animals.txt
 }
