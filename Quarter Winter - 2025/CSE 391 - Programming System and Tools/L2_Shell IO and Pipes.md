@@ -2,9 +2,11 @@
 ```
 // say you retook a class (spring, summer 2025) and you want to compare the difference in the materials
 
-echo diff s{p,u}25/materials
+echo diff 25s{p,u}/materials // you can also use comparison tools on your editor (vscode)
 
-// To submit your homework onto gradescope from linux, instead scp your file to ur local machine then upload to gradescope
+// To debug your autograder result from gradescope
+ssh autgrader_enviroment 
+- it's in an isolated container
 
 // To get yourself into the parent folder when lost
 cd ~ or cd
@@ -121,3 +123,17 @@ Refer to SimpleGrep.java for for tryout to see the difference
     - ex. as it is common to write TODO in your programs, one may use grep in such way --- grep "TODO" project/*
         - note: * wildcard allows use to select of any file that is under the project folder
 - To compile a java file in unix enviroment: javac -o run_name, then run it with java run_name
+
+## Vim editing tips/notes
+- right bottom #,# gives you infor of your cursor location (row, col)
+- when you're in vim, use `:e somefile.txt `to open the somefile to edit
+    - `vim newfile.txt` when creating a newfile and start editing
+**navigation**
+- b to press back an entire word
+- w to press forward an entire word
+- 0 to press to row 0
+- shift 4 to press to get the end of the line
+
+**insertion/editing**
+- a to press to append
+- . to repeat last insetion, whereas u to undo the last insertion you did
