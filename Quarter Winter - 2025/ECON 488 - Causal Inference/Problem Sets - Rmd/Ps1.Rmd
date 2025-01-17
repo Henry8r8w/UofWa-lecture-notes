@@ -1,0 +1,61 @@
+---
+title: "Econ 488, First problem set"
+output: 
+  pdf_document:
+    keep_tex: true
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+  
+## Solutions:
+1. Subset of a population where the outcomes are indecent and identically distributed to one sample and another sample
+
+2. Yes, we do expect the every Y_i to be unaffected to each other in terms of drawing outcome and their chance of being drawn. If {Y_1, Y_2} or {Y_1, Y10} are being drawn from a consecutive drawn without clearing draw box, then we would still say they are randomly sampled
+
+3. Some possible DV and CV one can have from drawing 2 customers for December spending information collection
+Discrete: average spending during December
+Continuous: daily spending during December
+
+4.
+
+```{r}
+set.seed(1)
+
+# Given N(mu = 5, omega = 1), a continuous rv, we want to find the mean (5). To prove that mean is 5, we can use expected value formal definition: E(X) = \int x*f_x(x) dx, where f_x(x) is the probability density function of X
+N5_1 <- function(x) {
+  x * dnorm(x, mean = 5, sd = 1)
+}
+
+EX <- integrate (N5_1, lower = 1, 
+                 upper = Inf)
+cat('The expected value of N(mu = 5, sigma = 1):', EX$value, '\n') # use str(EX) to check attributes
+
+# Gvien Pr(Z = 1) + P(Z = 0) = 1, a discrete rv, we want to find the mean. To prove that mean is 0.5, we have E(Z) = y_z1p_1 + y_z2p2, where we expect p1 = p2 if they are randomly distributed 
+ber_values <- c(0:1)
+prob1_2 <- 1/length(ber_values)
+
+BT <- ber_values[1]* prob1_2  + ber_values[2]*prob1_2
+cat('The expected value of vernoulie trails of 0,1:', BT, '\n')
+```
+1. By indenting the block with four spaces, RMarkdown knows to keep continuing the list
+
+...
+
+13. Here is the R code I have used to answer this question:
+
+```{r message=FALSE, echo=TRUE, results='hide'}
+# A comment
+set.seed(1)
+z <- rchisq(4, 1)
+mean(z)
+
+```
+
+
+I found the average value of $z$ to be `r mean(z)`.
+
+This webpage that describes code chunk options: https://rstudio.github.io/cheatsheets/html/rmarkdown.html
