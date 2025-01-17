@@ -1,7 +1,7 @@
 ### Signed Integers
-- representation: using the most signinfncat bit (msb)
+- representation: using the most significant bit (msb)
 - range: $[-2^{n - 1}: 2^{n - 1} -1]$
-- negation procedure: - x = ~x +1 (-x is assigng by the negation of x and add one (negative signed))
+- negation procedure: - x = ~x +1 (-x is assign by the negation of x and add one (negative signed))
 
 Question 1: Compute the decimal value of the 8-bit Two's Complement number 0xAA
 
@@ -78,7 +78,7 @@ int main() {
   printf("a && b = %d\n", a && b);//
 }
 ```
-note: C treates a value of 0 in any form, NULL and '0/', as False, and anything else as true
+note: C treats a value of 0 in any form, NULL and '0/', as False, and anything else as true
 - in the case of &&, the non-zero are evaluated in non-binary representation (hex or decimal)
 - it does not matter what representations a and b are in, binary, hex, decimal, but it is only evaluated based on 'non-zero-ness'
 

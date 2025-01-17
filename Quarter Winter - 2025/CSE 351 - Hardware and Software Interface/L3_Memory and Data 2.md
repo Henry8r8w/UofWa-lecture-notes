@@ -34,7 +34,7 @@ printf legend:
 - Declaration: int a[6] (type name[num(element)])
   - indexing: &a[i] is the address of a[0] + i times of the element size in byte
     - int*p;,p = a; | p[1] is equivalent to *(p+1) as we get 1 + 4 byte away column element from the pointer of a[0] row from both syntax
-- note: C has no bound checking, whcih could result in dirty write
+- note: C has no bound checking, which could result in dirty write
 
 
 ### Assignment in C
@@ -62,7 +62,7 @@ printf legend:
 - & = 'address of' operator
 - * = 'value at address' or 'dereference' operator
 ### In-Lecture Poll
-what woulld a[0], a[1] and p  be after the execution?
+what would a[0], a[1] and p  be after the execution?
 ```c
 void main() {
   int a[] = {0x5,0x10}; 
@@ -78,7 +78,7 @@ which of the {x+10, p +10, &x + 10, *(&p), ar[1], &ar[2]} evaluate to an address
 
 and
 
-How much space does the varaible p take up?
+How much space does the variable p take up?
 
 ```c
 int x = 351;
@@ -86,15 +86,15 @@ char* p = &x;
 int ar[3];
 ```
 - p + 10, &x + 10, &ar[2], *(&p)
-  - note: derefering an pointer (&p) to p give us &x
-- p takes up 8 bytes (irelvenat to the delcared type), but instead depedn on the bit system (64 vs 32)
+  - note: dereferencing an pointer (&p) to p give us &x
+- p takes up 8 bytes (irrelevant to the declared type), but instead depend on the bit system (64 vs 32)
 
 ---
 
 
 ### C Strings
-- C does not explicity support string data type
-    - they are actyakkt arrats if characters that are termianted by the null character (ex.'hi' -> 'h'| 'i' |'\0'), the \0, which evaluate to 0 and used in the context of *char and **char
+- C does not explicit support string data type
+    - they are actually arrays if characters that are terminated by the null character (ex.'hi' -> 'h'| 'i' |'\0'), the \0, which evaluate to 0 and used in the context of *char and **char
 ```c
 #include <stdio.h>
 
@@ -107,13 +107,13 @@ int main() {
 //output: Yo!
 ```
 Question to think about: How many bytes of memory are allocated for the string literal "CSE 351"?
-- 6 + 2, becuase there are 6 divisible chracters with 1 space and the null terminator
+- 6 + 2, because there are 6 divisible characters with 1 space and the null terminator
 ### Arrays
 - def: sets of contiguous locations in memory that store the same type of data object
     - to declare: `type array_name[num]; `
     - the subscript notation: `array_name[n]`, which is actually access by *(array_name +n)
-        - recall: how pointer points to the first element (i:0), where led us still have n element still need to be dereferecned to access the n-th array
-        - note: C does not check any bound, so there could be logical erros or bad memory access by default
+        - recall: how pointer points to the first element (i:0), where led us still have n element still need to be dereferenced to access the n-th array
+        - note: C does not check any bound, so there could be logical errors or bad memory access by default
 
 ex. how many bytes are in long my_array[5]; ? 40
 
@@ -150,12 +150,12 @@ printf("%d\n", p2 - p1);  // numerical (not byte) difference in number of int el
 
 
 ### Pointers in C
-- pointers are special varaibles of word size that store addresses
+- pointers are special variables of word size that store addresses
 ```c
 type* ptr; // note: type encodes the 'size' information, which is to accompany with the 'location' of your value ptr
 ```
 
-- the address-of operator (&) goes in front of a varaible and returns the address of that variable in memory, which is to be storeed in a pointer of an appropriate type*
+- the address-of operator (&) goes in front of a variable and returns the address of that variable in memory, which is to be stored in a pointer of an appropriate type*
 ```
 #include <stdio.h> // this copies the output to an .h executable to prototype function 
 int main() {
@@ -183,7 +183,7 @@ int main() {
 //r = 351
 
 ```
-- NULL, a symbolic constnat. It evaluates to zero and indicate a pointer pointer to nothing (needs to be intilaized to a pointer). Dereferencing NULL can results in a runtime error
+- NULL, a symbolic constant. It evaluates to zero and indicate a pointer pointer to nothing (needs to be initialized to a pointer). Dereferencing NULL can results in a runtime error
 
 ```c
 #include <stdio.h>

@@ -1,4 +1,15 @@
-### Lab 1 and 1a
+## Lab 1 and 1a
+### What does mux2_1 and mux4_1 do
+- Mux stands for muxiplier
+
+With mux2_1 we are given with two signals to select i0, i1, where we use sel to select the output signal of the mux 2 -> 1 output
+
+With mux4_1 are a given with four signals to select, i00, i01, i10, i11, where we use sel0 and sel1 to represent the 4 combination (b^{n} = 2 ^2) to choose what to output: 4 -> 4
+
+The gate logic we have for our mux2_1 and mux4_1 are as the following:
+- 2_1: assign out = (i1 & sel) | (i0 & ~sel); // given i0 and i1 are activate as 1, when sel is 1 i1 will be sampled, and when sel is 0 i0 will be sampled
+- 4_1:
+### To troubleshoot
 During Design:
 - You need to ensure that your mux2_1.sv file is added to the directory of your mux2_1.sv through `project` -> `add current file to Project` to ensure you're able to compiled a usable sv
 
