@@ -3,7 +3,7 @@
 - Helps with having more flexibility in our notation
 ex. 4-bit:
 - **1010 unsigned**
-  - $1*2^3+ 0*2^2+1*2^1+0*2^0 = 10
+  - $1*2^3+ 0*2^2+1*2^1+0*2^0 = 10$
 - **1010 two complements**
   - $-1*2^3+0*2^2+1*2^1+ 0*2^0 = -6$
 
