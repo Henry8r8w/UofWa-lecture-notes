@@ -1,3 +1,31 @@
+## HW4: Bitwise and Logical Operators
+### Interpretation
+What is the integer value stored in `signed char x = 0xE1;`?
+- step 1: convert hex to bits to decimal
+  - 0b11100001 becomes -31
+    - note: the MSB gives you the sign, making a -2^7+2^6+2^5+2^0
+tip: one can also use the negation and +1 bit (more official) to get the same result 
+- ~x: 0b00011110 + 1, which becomes 00011111
+  - a tip when there are n consecutive 1s, use 2^n -1 formula
+  - 2^5 -1 = 31, and since the sign bit was 1, so -31 is out answer
+Which of the following 8-bit numerals has a larger magnitude (i.e., farther from 0) when interpreted as an unsigned number than when it is interpreted a signed number?
+- 0x00, 0x7F, 0x80, 0xFF
+  - ans:0xFF
+### Bitwise Operators
+What is the resulting value (in binary) of r from the following code?
+```
+char c = 0xF1; // binary: 1111 0001
+char m1 = 0x55; // binary: 0101 0101
+char m2 = 0x62; // binary: 0110 0010
+char m3 = 0x2B; // binary: 0010 1011
+char r = ((~c | m1) & m2) ^ m3;
+```
+- `~c|m1`:  ~0b11110001 | 0b01010101, which is 0b01011111
+- `(~c | m1) & m2`:0b01011111 & 0b01100010, which is 0b01000010
+- `((~c | m1) & m2) ^ m3`: 0b01000010 ^ 0b00101011, which is 0b01101001
+
+Recall that a null pointer is a pointer that "points to nothing" and has the value 0x0. Logically, what does the null pointer evaluate to?
+- False
 ## HW3: Memory and Data 2
 ### Memory Allocation
 How much memory (in bytes) is taken up by the following variables and data?
