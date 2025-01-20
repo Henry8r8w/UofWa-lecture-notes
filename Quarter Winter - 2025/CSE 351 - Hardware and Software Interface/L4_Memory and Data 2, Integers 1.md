@@ -3,9 +3,9 @@
 - Helps with having more flexibility in our notation
 ex. 4-bit:
 - **1010 unsigned**
-  - $1*2^3+ 0*2^2+1*2^1+0*2^0 = 10$
+  - $1 \cdot 2^3 + 0 \cdot 2^2 + 1 \cdot 2^1 + 0 \cdot 2^0 = 10$
 - **1010 two complements**
-  - $-1*2^3+0*2^2+1*2^1+ 0*2^0 = -6$
+  - $-1 \cdot 2^3 + 0 \cdot 2^2 + 1 \cdot 2^1 + 0 \cdot 2^0 = -6$
 
 - we can represent -1 in 1111 expression as
   - $1111_2 = -2^3 + (2^3 -1)$
