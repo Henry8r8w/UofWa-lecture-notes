@@ -37,7 +37,7 @@ Question: what is difference between grep "a" letters.txt and cat letters.txt | 
 ## Pipes
 - unlike IO redirection, command < file/ command > file, we use command | command
 - ex.  grep "berry" fruits.txt | wc -l
-    - this would get us the word count of thethe items containing 'berry' 
+    - this would get us the word count of the items containing 'berry' 
 note: it's common to have the second pipe command overwrite the first one; to use pipe, you always need a standard input
 ```
 grep "a" berries.txt | grep "e" berries.txt // nope, this only give us items with e in berries, which is all
@@ -122,7 +122,7 @@ Refer to SimpleGrep.java for for tryout to see the difference
     - ex. grep 'wordtosearch' filepath1 filepath2 with exact match
     - ex. as it is common to write TODO in your programs, one may use grep in such way --- grep "TODO" project/*
         - note: * wildcard allows use to select of any file that is under the project folder
-- To compile a java file in unix enviroment: javac -o run_name, then run it with java run_name
+- To compile a java file in unix environment: javac run_name.java, then run it with java run_name
 
 ## Vim editing tips/notes
 - right bottom #,# gives you infor of your cursor location (row, col)

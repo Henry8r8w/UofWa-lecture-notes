@@ -13,7 +13,7 @@ function problem1 {
 
 function problem2 {
   # Type your answer to problem #2 below this line
-  java ParseColumn 3 < intro_survey.csv > candies.txt
+  cat intro_survey.csv| java ParseColumn 1 > candies.txt
 
 }
 
