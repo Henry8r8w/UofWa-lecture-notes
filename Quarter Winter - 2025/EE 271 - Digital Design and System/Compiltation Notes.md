@@ -6,6 +6,7 @@ note: one must demonstrate the one-digit design before the two digit design; by 
 such that you may load your second design
 
 Circuit Diagram addressing **Multi-level Logic on the Breadboard** design problem
+
 NOT(SW1) AND (SW2 AND SW3) AND NOT(Sw4)
 - need to reduce it
 
