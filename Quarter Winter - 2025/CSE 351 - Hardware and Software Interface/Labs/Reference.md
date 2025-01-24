@@ -55,6 +55,7 @@ for i = 0 to n - 1
 end for
 ```
 - note: you might find your previously implemented `swap_ints` useful
+
 ## Lab0: warm up & get ready with linux
 To compile your c code, you will use gcc
 
