@@ -4,4 +4,4 @@ This repo contains the notes and assignment addresses I have for economics (ECON
 
 This repository will remain public while I am a student at the school. 
 
-**Languages used: C, python, Java, SystemVerilog, Bash, R**
+**Languages used: C, python, Java, SystemVerilog, shell script, R**
