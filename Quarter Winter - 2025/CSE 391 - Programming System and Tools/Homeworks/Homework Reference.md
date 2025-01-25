@@ -1,3 +1,32 @@
+## Hw2 - More Unix Shell
+
+Task 1: vim navigation
+In vim, open intro_survey.csv and answer the following questions in task1.txt.
+
+What is the command to move your cursor to the end of the file?
+What is the command to move your cursor back up to the beginning of the file?
+What is the command to move to line 50 of the file? Practice moving around to different lines in the file. You may notice that vim does not show line numbers of a file by default but you can enable line numbers. While it’s not required that you look this up, you may find it helpful.
+What is the command to search for the text “chocolate”?
+What is the command to go to the next match from your search?
+While the answers to the questions themselves are relatively easy to find by simply looking them up, the real learning will come from you actually practicing these commands yourself. We also recommend getting even more practice by writing the answers to your task1.txt and task2.sh files using vim!
+
+Task 2: Bash commands
+For this task, we will compose shell commands with input/output redirection operators such as >, <, and | to perform more complicated data analyses of intro_survey.csv. For each problem below, determine a single bash statement that will either perform the operation(s) requested or answer the given question.
+
+Write your answers on the indicated lines in the task2.sh file in the hw2 folder.
+
+Compile the Java file ParseColumn.java.
+Assuming ParseColumn has already been compiled, run ParseColumn to parse intro_survey.csv and output only the answers to “What’s your favorite candy?” and write the output to a file called candies.txt. The ParseColumn program takes a column number (1-indexed) as a command-line argument, reads a CSV file from stdin and outputs only the specified column in the CSV file.
+Given a list of candies.txt, output only the lines that include the text “chocolate” (ignoring case).
+Given a list of candies.txt, output only the lines that do not include the text “chocolate” (ignoring case). Your answer should include the CSV header, “What’s your favorite candy?”
+Create a new file called intro_survey_no_header.csv containing all the contents of intro_survey.csv except for the first line (the CSV header), “What’s your favorite candy?” Write your command in a general way so that it works regardless of the specific data in intro_survey.csv using the head or tail commands.
+Assuming the intro_survey_no_header.csv lists responses from oldest to newest, output the favorite dinner of the newest survey submission.
+How many students completed the survey? Write a command that outputs a string both the number and the name of the file separated by a space: [number] intro_survey_no_header.csv.
+How many students in the course are not also taking CSE 351? Since the answers to the question, “Are you currently enrolled in CSE 351?” are “Yes” and “No”, you won’t be able to simply grep intro_survey.csv for “No” as it may appear as part of answers to other questions.
+How many unique answers (ignoring case) are there to the question, “What’s your favorite candy?” Don’t worry right now about the difference between answers like “kit kat” and “kitkat”, but your solution should count “kitkat” and “KITKAT” as the same. Be careful that the header “What’s your favorite candy?” is not counted.
+
+
+
 ## Hw1 - Basic Unix Shell Commands
 
 **Task1: log in to calgary server**

@@ -32,28 +32,28 @@ note: tar archive format need to be unarchive by tar, which unzip line by line (
 
 Question: what is difference between grep "a" letters.txt and cat letters.txt | grep "a"
 
-- There is a no differnece in the result, but the process is difference: grep opens a file and read its content and highlight the "searchword", so using a pipe for the grep, you are essentially getting a stdin for the grep and the grep reads inputs that are presented and not opening any file
+- There is a no difference in the result, but the process is difference: grep opens a file and read its content and highlight the "searchword", so using a pipe for the grep, you are essentially getting a stdin for the grep and the grep reads inputs that are presented and not opening any file
 
 ## Pipes
 - unlike IO redirection, command < file/ command > file, we use command | command
 - ex.  grep "berry" fruits.txt | wc -l
-    - this would get us the word count of thethe items containing 'berry' 
+    - this would get us the word count of the items containing 'berry' 
 note: it's common to have the second pipe command overwrite the first one; to use pipe, you always need a standard input
 ```
 grep "a" berries.txt | grep "e" berries.txt // nope, this only give us items with e in berries, which is all
 
-grep "a" berries.txt | grep "e" // yes, becuase our grep 'e' receive standard input from the first one; so we filtered out berries items with a and e letter
+grep "a" berries.txt | grep "e" // yes, because our grep 'e' receive standard input from the first one; so we filtered out berries items with a and e letter
 ```
 - if you used > in the case of grep "e", it is to say taht you'r asking the output of grep "a" berries.txt to write a file named grep and "e"
 
-Say, we want to count berries but we know that there are defintely duplicates, what do we do 
+Say, we want to count berries but we know that there are definitely duplicates, what do we do 
 ```
 sort berrties.txt |uniq| wc -l // use uniq command
 ```
 ## Input and Output Redirection
 **Standard Streams**
 - stdin (input), stdout (output), stderr (error)
-    - the java correspondance: System.in, System.out, System.err
+    - the java correspondence: System.in, System.out, System.err
  
 stdin -> Process(a program s.a ls, cd, or grep) -> stdout, stderr
 
@@ -98,7 +98,7 @@ If you want to do append instead of overwritting, you will use >> and << instead
 
 Refer to SimpleGrep.java for for tryout to see the difference
 
-#TODO: this std io vs param still need soem reenforcement
+#TODO: this std io vs param still need some reenforcement
 
 ## More Unix commands
 - it is always a good practice to use `clear` to clean your terminal look

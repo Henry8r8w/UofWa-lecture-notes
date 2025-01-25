@@ -1,0 +1,150 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/henry/OneDrive/Desktop/Lab Setup - 271/Lab Files - Root/L1 - getting started and mux
+vDE1_SoC
+Z0 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+Z1 !s110 1737569124
+!i10b 1
+!s100 UH=8h]lTfz9i3Yd_eEFg;0
+IJWc0_3::?:RoDbN6^aE]80
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 !s105 DE1_SoC_sv_unit
+S1
+Z4 dC:/Users/henry/OneDrive/Desktop/Lab Setup - 271/Lab Files - Root/L2 - multi-gates and multi-digits design
+Z5 w1737351855
+Z6 8./DE1_SoC.sv
+Z7 F./DE1_SoC.sv
+L0 1
+Z8 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z9 !s108 1737569123.000000
+Z10 !s107 ./DE1_SoC.sv|
+Z11 !s90 -reportprogress|300|./DE1_SoC.sv|
+!i113 1
+Z12 tCvgOpt 0
+n@d@e1_@so@c
+vDE1_SoC_testbench
+R0
+R1
+!i10b 1
+!s100 3znk;?a9GAKZMAfM59eKN3
+IZMPnfCh62Y<6Yi_E7?TeK3
+R2
+R3
+S1
+R4
+R5
+R6
+R7
+L0 28
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 1
+R12
+n@d@e1_@so@c_testbench
+vmux2_1
+R0
+Z13 !s110 1736928313
+!i10b 1
+!s100 kjXKA>1zg8jZCjz_TN:^m1
+I5EBA=BEg_]G^HKI1]jOD81
+R2
+Z14 !s105 mux2_1_sv_unit
+S1
+Z15 dC:/Users/henry/OneDrive/Desktop/Lab Setup - 271/Lab Files - Root/L1a - mux4_1
+Z16 w1736861854
+Z17 8./mux2_1.sv
+Z18 F./mux2_1.sv
+L0 3
+R8
+r1
+!s85 0
+31
+Z19 !s108 1736928313.000000
+Z20 !s107 ./mux2_1.sv|
+Z21 !s90 -reportprogress|300|./mux2_1.sv|
+!i113 1
+R12
+vmux2_1_testbench
+R0
+R13
+!i10b 1
+!s100 X79ZnGY7V5@7N6P1JQfcb1
+IffXjzAaeZ9m7kOUmnAX8N0
+R2
+R14
+S1
+R15
+R16
+R17
+R18
+L0 11
+R8
+r1
+!s85 0
+31
+R19
+R20
+R21
+!i113 1
+R12
+vmux4_1
+R0
+R13
+!i10b 1
+!s100 Ec4e=KiHHUn@d39<?fh=A0
+I>^bGWSIo24VS6^Acej4R32
+R2
+Z22 !s105 mux4_1_sv_unit
+S1
+R15
+Z23 w1736861563
+Z24 8./mux4_1.sv
+Z25 F./mux4_1.sv
+L0 1
+R8
+r1
+!s85 0
+31
+R19
+Z26 !s107 ./mux4_1.sv|
+Z27 !s90 -reportprogress|300|./mux4_1.sv|
+!i113 1
+R12
+vmux4_1_testbench
+R0
+R13
+!i10b 1
+!s100 id9bSOO_:k:RP0K@F`Hf<2
+I0863l2:1;5n>9M4Q5_1e20
+R2
+R22
+S1
+R15
+R23
+R24
+R25
+L0 13
+R8
+r1
+!s85 0
+31
+R19
+R26
+R27
+!i113 1
+R12

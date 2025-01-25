@@ -1,5 +1,5 @@
 ### HW1 
-log in to your ssh usernetid@calgary.cs.
+log in to your ssh usernetid@calgary.cs.washington.edu
 git archive --remote=git@gitlab.cs.washington.edu:cse391/25wi/lectures.git --prefix=lec1/ HEAD:1/ | tar -x
 
 ### Vim basics
@@ -18,7 +18,7 @@ git archive --remote=git@gitlab.cs.washington.edu:cse391/25wi/lectures.git --pre
 
 Difference between insert mode and normal mode
 - Normal: view and command only, Esc then q to exit
-- Insert Mode: a for append to move the curso after current character, 0 insert a new line below current line 
+- Insert Mode: a for append to move the cursor after current character, 0 insert a new line below current line 
 
 
 Visual Mode
@@ -63,22 +63,22 @@ directory: ~/Desktop
 
 
 ### Basic Shell Commands
-ommand: date 
+command: date 
 - description: output system date
 command: cal -  
-- description: output a text calnder
+- description: output a text calender
 
 command: uname
--deszcription: print infromation about the urrent system
+-description: print information about the current system
 ### Anatomy of a Command
 ```
 $ ls -al dir1 (command: list -flag:all argument:directory1)
 ```
 
 ### Why Unix & Linux
--  light weight program sovle big problems
+-  light weight program solve big problems
 - multiple user permission
-- hierachriall file system (recurisve order)
+- hierarchial file system (recursive order)
 - documentation is within the software
     - other keywords: shell scripts, coroutines, pipelines, regular expressions
 
