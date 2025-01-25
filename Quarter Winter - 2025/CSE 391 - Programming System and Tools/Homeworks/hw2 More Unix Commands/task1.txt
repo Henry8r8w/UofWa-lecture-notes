@@ -1,0 +1,9 @@
+# Write your answers to task1 below.
+# Do NOT remove or modify the question numbers.
+# Each answer should be kept on a single line.
+
+1.G, to move cursor to the end of the file
+2.gg, to move cursor to the beginning of the file
+3.50G, to move cursor to the line 50 of the file
+4./chocolate, to search the word 'chocolate' in vim
+5.n, to go to next match; N, to go to previous match

@@ -1,0 +1,23 @@
+******************************
+* Lab 1a Synthesis Questions *
+******************************
+Name(s):Henry Wang  
+NetID(s):2141746
+
+
+-----------------------------------------------------------
+1) Steps:assuming a return of integer, I used casting to get out integer value at 64-bit system; the subtraction of the address of the element(index+1) pointer pointeed to the address of the element(index) pointer pointed to can give the difference of the address. Long int was nessesary as we deal with 64-bit system; int casting of the differnece was alos nessesary asit is the return type
+
+
+
+-----------------------------------------------------------
+2) Explain:
+We want to make changes to the value of two pointers pointed address; naturally int parameters won't allow us to modify the value at the pointer's value
+
+
+
+-----------------------------------------------------------
+3) Positive/drawback:
+I don't find there is a difficulty converting from java to C. Only that sometimes the debugging can be more time consuming on linux. 
+
+

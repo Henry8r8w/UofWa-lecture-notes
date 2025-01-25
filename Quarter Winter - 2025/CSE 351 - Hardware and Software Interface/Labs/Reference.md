@@ -1,6 +1,60 @@
 ## Lab 1a: Pointers in C
 
+### Getting Started
+wget https://courses.cs.washington.edu/courses/cse351/25wi/labs/lab1a.tar.gz
+- extract using tar zxvf lab1a.tar.gz
 
+
+### Checking the work
+- look into Makefile
+    - run make clean, then run make 
+    - you should see a binary ptest file based on ptest.c and execute it to see your test outputs
+`pointer.c` and `lab1Asynthesis.txt` will need to be submitted
+
+### Lab Format
+- only straight line code; no loop; check ALLOW comment under pointer.c
+- >> and << can be used
+- only 8 bits, 1 bytes is allowed
+- sizeof is not allowed
+- () and = can be used for casting if needed
+- comments are not graded
+
+### Using Pointers
+**Pointer Arithmetic**
+- First three functions ask one to compute size of various data elements (e.g., ints, doubles, and pointers)
+
+**Manipulating Data Using Pointers**
+- Fourth and fifth functions ask one to manipulate data
+    - `swap_int`: you swap the values that two given pointers point to without changing the pointers themselves
+    - `change_value`: you change the value of an element of an array using only the starting address of the array; add value to the pointer to create a new pointer to the data element to be modified; [] element access is not allowed
+**Pointers and Address Ranges**
+- two functions to implements
+
+`within_same_block`: determine if the addresses store dby two pointers lie within the same block of 64-byte aligned memory
+
+`within_array`: determine if the address stored in `ptr` is pointing to a byte that makes up some part of an array element for a passed array
+
+**Byte Traversal**
+`string_length`: return the length of a string, given a pointer to its beaning; no loop allowed
+
+`endian_experiment`: set the value a pointer points to to the number 351351; keyword: little endian
+
+**Selection Sort**
+- Implement a selection sort
+```
+// "arr" is an array
+// "n" is the length of arr
+for i = 0 to n - 1
+  minIndex = i
+  for  j = i + 1 to n
+    if arr[minIndex] > arr[j]
+      minIndex = j
+    end if
+  end for
+  Swap(arr[i], arr[minIndex])
+end for
+```
+- note: you might find your previously implemented `swap_ints` useful
 
 ## Lab0: warm up & get ready with linux
 To compile your c code, you will use gcc

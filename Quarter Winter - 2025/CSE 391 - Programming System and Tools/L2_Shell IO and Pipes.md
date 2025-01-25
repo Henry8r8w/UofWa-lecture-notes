@@ -122,7 +122,7 @@ Refer to SimpleGrep.java for for tryout to see the difference
     - ex. grep 'wordtosearch' filepath1 filepath2 with exact match
     - ex. as it is common to write TODO in your programs, one may use grep in such way --- grep "TODO" project/*
         - note: * wildcard allows use to select of any file that is under the project folder
-- To compile a java file in unix enviroment: javac -o run_name, then run it with java run_name
+- To compile a java file in unix environment: javac run_name.java, then run it with java run_name
 
 ## Vim editing tips/notes
 - right bottom #,# gives you infor of your cursor location (row, col)

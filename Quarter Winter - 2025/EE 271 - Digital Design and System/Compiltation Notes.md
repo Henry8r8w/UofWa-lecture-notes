@@ -6,9 +6,10 @@ note: one must demonstrate the one-digit design before the two digit design; by 
 such that you may load your second design
 
 Circuit Diagram addressing **Multi-level Logic on the Breadboard** design problem
-- NOT(SW1) AND (SW2 AND SW3) AND NOT(Sw4)
-    - However, we are only given with NAND, NOR, and NOT
-    - revised circuit diagram: NOT(NOT(NOT(SW1) NAND NOT(SW2 NAND SW3)) NAND NOT(SW4))
+
+NOT(SW1) AND (SW2 AND SW3) AND NOT(Sw4)
+- need to reduce it
+
 ## Lab 1 and 1a
 ### What does mux2_1 and mux4_1 do
 - Mux stands for muxiplier
