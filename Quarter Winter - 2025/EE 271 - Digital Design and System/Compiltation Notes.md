@@ -7,7 +7,7 @@ such that you may load your second design
 
 Circuit Diagram addressing **Multi-level Logic on the Breadboard** design problem
 
-NOT(SW1) AND (SW2 AND SW3) AND NOT(Sw4)
+NOT(NAND(NOT(NAND(NOT(SW1), NOT(NAND(SW2, SW3)))), NOT(SW4))) = out
 - need to reduce it
 
 ## Lab 1 and 1a
