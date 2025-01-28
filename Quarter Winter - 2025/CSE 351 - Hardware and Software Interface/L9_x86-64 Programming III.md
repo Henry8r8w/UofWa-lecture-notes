@@ -1,3 +1,251 @@
+### Labels
+Labels give us a way to refer to a specific instruction in
+our assembly/machine code
+- Associated with the next instruction found in the assembly code
+(ignores whitespace)
+- Each use of the label will eventually be replaced with something
+that indicates the final address of the instruction that it is
+associated with
+
+ex. max and done are your Labels
+```assembly
+max:
+  movq %rdi, %rax
+  cmpq %rsi, %rdi
+  jg done
+  movq %rsi, %rax
+done:
+  ret
+
+
+```
+
+### Practice Question 1
+### Control Flow
+Register: %rdi (use: operand1), %rsi (use: operand2), %rax (use: return value)
+
+```assembly
+max: 
+    if true
+    if false then jump to else
+    movq %rdi, %rax
+    jump to done
+else:
+    movq %rsi, %rax
+done:
+    ret
+
+```
+Translate to c
+
+```C
+long max(long x, long y)
+{
+    long max;
+    if (x > y) {
+        max = x;
+    } else {
+        max = y;
+    }
+    return max;
+}
+
+```
+### Choosing instructions for conditionals
+All arithmetic instructions set condition flags based on result of
+operation (op)
+- Conditionals are comparisons against 0
+- Come in instruction pairs: first set flags, then jump!
+
+
+addq 5, (p)
+- je: *p+5 == 0
+- jne: *p+5 != 0
+- jg: *p+5 > 0
+- jl: *p+5 < 0
+
+orq a, b
+- je: b|a == 0 
+- jne: b|a != 0 
+- jg: b|a > 0 
+- jl: b|a < 0 
+
+cmpq 5, (p)
+- je: *p == 5 
+- jne: *p != 5 
+- jg: *p > 5 
+- jl: *p < 5
+
+testq a, a
+- je: a == 0 
+- jne: a != 0 
+- jg: a > 0 
+- jl: a < 0
+
+testb a, 0x1
+- je: aLSB == 0.
+- jne: aLSB == 1.
+
+example
+```c
+if (x <3){
+  return 1;
+}
+return 2;
+```
+Register: %rdi (use: operand1), %rsi (use: operand2), %rax (use: return value)
+```assembly
+cmpq $3, %rdi
+jge T2 # greater or equal
+
+T1: # x <3:
+  moveq $1, %rax
+  ret
+T2: # !(x < 3):
+  movq $2, %rax
+  ret
+```
+### Reading Condition Codes
+Operand is byte register (e.g., %al) or a byte in memory
+- Do not alter remaining bytes in register
+  - Typically use movzbl (zero-extended mov) to “finish the job”
+
+Register: %rdi (use: operand1), %rsi (use: operand2), %rax (use: return value)
+
+```c
+int gt (long x, long y){
+  return x > y
+}
+
+```
+
+
+```assembly
+cmpq %rsi, %rdi # Compare x:y
+setg %al # set when >
+movzbl %al, %eax # zero rest of %rax: | %rax     | %eax   | %ax    | %al   |
+ret
+```
+### Using COndition COdes: Setting
+set* Instructions
+- Set low-order byte of dst to 0 or 1 based on condition codes
+- Does not alter remaining 7 bytes
+
+
+| Instruction | Condition         | Description                  |
+|-------------|-------------------|------------------------------|
+| `sete`      | ZF                | Equal / Zero                 |
+| `setne`     | ~ZF               | Not Equal / Not Zero         |
+| `sets`      | SF                | Negative                     |
+| `setns`     | ~SF               | Nonnegative                  |
+| `setg`      | ~(SF^OF) & ~ZF    | Greater (Signed)             |
+| `setge`     | ~(SF^OF)          | Greater or Equal (Signed)    |
+| `setl`      | (SF^OF)           | Less (Signed)                |
+| `setle`     | (SF^OF)           | Less or Equal (Signed)       |
+| `seta`      | ~CF & ~ZF         | Above (unsigned ">")         |
+| `setb`      | CF                | Below (unsigned "<")         |
+
+### Using Condition Codes: Jumping
+J* Instructions
+- Jumps to target (an address) based on condition codes
+
+Note: We can’t define our own j* instructions. But we can
+simulate customizing one by “saving” flags for a compound conditional, and jumping based on that…
+
+
+### Example Condition Code Setting
+Assuming that %al = 0x80 and %bl = 0x81, which flags
+(CF, ZF, SF, OF) are set when we execute:
+cmpb %al, %bl
+
+CF:, ZF:, SF:, OF:
+
+
+### Setting Condition Codes: Explicit Setting with test
+Explicitly set by Test instruction
+- testq src2, src1 ↔ sets flags based on a&b
+Kind of like andq a, b but doesn’t store result anywhere
+Tip: Useful to have one of the operands be a mask
+- Can’t have carry out (CF) or overflow (OF)—why?
+  - Jump 'jump' to an target address, whereas set modify the lower-order byte of the destination
+- ZF=1 if a&b==0
+- SF=1 if a&b<0 (signed)
+
+### Setting Condition Codes: Explicit Setting with cmp
+- Explicitly set by the Compare instruction
+  - cmpq src1, src2 ↔ sets flags based on b-a
+      - Kind of like subq a, b but doesn’t store result anywhere
+
+- CF=1 if carry out from MSB (good for unsigned comparison)
+- ZF=1 if a==b, because b-a==0!
+- SF=1 if (b-a)<0 (if MSB is 1)
+-  OF=1 if signed overflow
+  -(a>0 && b<0 && (b-a)>0) || (a<0 && b>0 && (b-a)<0)
+### Setting Condition Codes: Implicit Setting
+- Implicit set by arithmetic operations
+  - ex. addq src, dst $\leftrightarrow$ r = d +s
+
+- CF=1 if carry out from MSB (unsigned overflow)
+- ZF=1 if r==0
+- SF=1 if r<0 (if MSB is 1)
+- OF=1 if signed overflow
+  - (s>0 && d>0 && r<0)||(s<0 && d<0 && r>=0) = out
+  - (condition1) or (condition2) met ? out: 1
+ 
+
+- Carry Flag (checks MSB carrying out; move 1 to left, add one bit)
+- Zero Flag (check the result operation being 0 or not)
+- Overflow Flag (checks overflow of sign)
+  - (a>0 && b<0 && (b-a)>0) || (a<0 && b>0 && (b-a)<0)
+    - note: a and b are signed binary in representation of decimal
+  - ex. let a: 3 and b : 5
+    - two's complement: 0011 + 0110 = 1001 , which results in a signed -8, and is a overflow in MSB (from 0 to 1). Now the OF should be flaged 1
+
+
+  
+### Condition Codes
+- Carry Flag (CF): Set to 1 if most recent op result carried out data which
+couldn’t be stored; i.e. unsigned overflow (usually when dest < src)
+- Zero Flag (ZF): Set to 1 if most recent op result computed to 0
+- Sign Flag (SF): Set to 1 if most recent op result is a signed (negative)
+value i.e. MSB produced is 1
+- Overflow Flag (OF): Similar as carry flag, but applies to signed overflow i.e. if MSBs were both 0, and now result MSB is 1, or vice versa
+### Processor State (x86-64, partial)
+Information about
+currently executing
+program
+- Temporary data ( %rax, … )
+- Location of runtime
+stack ( %rsp )
+- Location of current
+- code control point ( %rip, … ), which is the  instruction pointer
+- Status of recent tests( CF, ZF, SF, OF ), which are the condition code
+
+### Conditional and Control Flow
+Two types of conditionals: branch and jump
+  - Jump: you "jump" to somewhere else if some condition is true
+  , otherwise execute next instruction
+Two types of unconditional: (still) branch and jump
+- Always jump when you get to this instruction
+
+
+### Move extension: movz and movs
+1. movz _ _  src, regDest # move with zero extension
+
+2. movs _ _ src, regDest # move with sign extension
+- note: _ _ denotes  the 2 width specifier where the lateral subtract the forecomer
+- copy from a smaller source value to a larger destination
+- source can be memory or register, but destination **must** be a register
+
+Example: movzbq %al, %rbx
+- q:8 byte - b:1 byte, which render a 28 bits zero extension (on right left)
+
+
+### Poll
+Keyword: interactive broker
+
+
+
 ## Pre-Lecture Reading
 ### If-else Statements
 Translating this C code

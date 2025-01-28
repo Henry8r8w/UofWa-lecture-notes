@@ -33,6 +33,7 @@ The most general way to express a Memory operand has 4 parts and the form: D(Rb,
 
 The computed address is Reg[Rb] + S*Reg[Ri] + D, where Reg[] means “the value in the specified register.
 - When passed a Memory operand, most instructions will dereference this address.  Dereferencing returns the value stored in memory at address Reg[Rb] + S*Reg[Ri] + D, which we write as Mem[Reg[Rb] + S*Reg[Ri] + D]
+    - note: S can only be a 2 power based
 
 Example:  The instruction movb 8(%rax,%rbx,2), %cl will copy ("move") the byte of data stored in memory at address Reg[rax] + Reg[rbx]*2 + 8 into the lowest byte of register %rcx.
 
