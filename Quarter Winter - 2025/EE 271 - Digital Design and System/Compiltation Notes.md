@@ -1,3 +1,8 @@
+## Lab 3
+ - You are expected to draw a K-map or use Boolean algebra to reduce the logic of discounted? or stolen ? logic 
+-  you may continue use DE1_SoC.sv for the whole design, for we want to load the design
+
+
 ## Lab 2
 - You are expected to see the two types of waveforms during your compilation, red and blue
     - Red: unknown values, which should showcase from the unknown KEY inputs
@@ -8,7 +13,7 @@ such that you may load your second design
 Circuit Diagram addressing **Multi-level Logic on the Breadboard** design problem
 
 NOT(SW1) AND (SW2 AND SW3) AND NOT(Sw4)
-- need to reduce it
+
 
 ## Lab 1 and 1a
 ### What does mux2_1 and mux4_1 do
