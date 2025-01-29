@@ -51,6 +51,6 @@ Simplified logic: S = NOT(U) * NOT(P) * NOT(C) * NOT(M) + C * NOT(M) * U
 
 ModelSim
 
-![My Image](Quarter Winter - 2025\EE 271 - Digital Design and System\Lab 3 - stolen_discount_waveform.jpg)
+![My Image](./Lab%203%20-%20stolen_discount_waveform.jpg)
 
 notice how the activation of LED[1] correspond to the of discount UPC, and the activation of LED[1] correspond to the expensive UPC code and NOT(M)
