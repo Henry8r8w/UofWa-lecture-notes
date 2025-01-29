@@ -1,3 +1,98 @@
+## HW7: Floating Point
+### FP Code
+```c
+#include <stdio.h>
+
+int main(int argc, char* argv[]) {
+  int count = 0;
+  float cap = 16777216;
+
+  for (float i = 0; i < cap; i++) {
+    count++;
+  }
+ls
+  printf("This iterated %d times\n", count);
+
+  return 0;
+}
+```
+- Run $ gcc -g -Wall -std=c18 -o fp fp.c
+
+Q1: How many times did the loop iterate
+- 16777216
+
+Q2: Change the initial value of cap to 16777217 (incremented by one). Compile and run the code. How many times does the loop iterate when you run it now?
+- 16777216
+  - note: notice how this is not something you expect
+  - rational: 2^{24} = 1677216, it is the max representation (ex. 1.00000000000000000000000 × 2^24) (1. with 23 zeros x 2^24)
+
+Q3: Increment the value of cap again to 16777218. Compile and run the code. What happens?
+- the loop does not stop
+
+Q4:What power of 2 is 16777216? That is, what is x such that 2^x=16777216
+- x = 24
+
+Q5: What is the value of the mantissa field (M) of the float representing 16777216? Answer in binary, without the 0b prefix and no spaces.
+- 00000000000000000000000
+
+Q6: What is the value of the mantissa field (M) of the float representing 16777218? Answer in binary, without the 0b prefix and no spaces.
+- 00000000000000000000001
+  - we don't want to further increment, so 0...01 is the last increment possible
+Q7: What limitation of floating point is responsible for the behavior we see when cap = 16777217?
+- Rounding of `cap`
+Q8: What limitation of floating point is responsible for the behavior we see when cap = 16777218?
+- Rounding of `i`
+
+### FLoating Point Special Cases
+Q1: Convert the single-precision floating point encoding 0x7FC00000 to its decimal value
+- Ans:
+  - 32 bits: 0 11111111 10000000000000000000000
+  - Exponent = E: 255 - bias: 127 = 128
+    - notice: the all ones in E and all some non-zeros in mantissa; this patterns renders NaN
+    - notice: 255 E represent either infinity or NaN, but when M is non-zeros, it is categorize as NaN
+Q2: Convert the single-precision floating point encoding 0xFF800000 to its decimal value
+- Ans:
+  - 32 bits: 1 11111111 00000000000000000000000
+  - notice: since the fraction (M) is all zeros, so the infinity is assigned instead of NaN, and our sign is negative; the result is - infinity
+### Decimal to Floating Point
+Q: Convert the decimal number 17.3125 into IEEE 754 single-precision floating point encoding 
+
+Sign (S)
+- since the number is positive, so the sign bit (S) is: S = 0
+
+Exponent Filed (E)
+- 17: 10001_2, .3125: 0.0101_2; 10001.0101_2
+  - normalization: 1.00010101_2 x 2^{E:4}, which gives us the some part of the mantissa
+  - Bias  = E + 127 = 131, which becomes 0b10000011_2
+
+Mantissa Field (M)
+- 1.M: 00010101_2, which requires padding until it reaches to 23 bits
+  - 00010101000000000000000_2
+
+S: 0
+
+E: 10000011 
+
+M: 00010101000000000000000
+
+Final 32 bits: 0 10000011 00010101000000000000000
+### Floating Point to Decimal
+Q: convert this 0b 1100 0000 1101 1000 0000 0000 0000 0000 binary to floating point
+- Ans: using the SEM procedure, we can split the binary into sign, exponent, and mantissa, use value = (-1)^{s}x M x 2^{E}
+  - E = exponent: 100 0000 1 - bias: 127 = 2
+  - M = 1.10110000000000000000000_2 = 2^-1 + 0 + 2^-3 + 2^-4 = 1.6875_10
+  - End Result: -1^{1} x 1.6875 x 4 = -6.75
+
+note: with M, assume preceding 1
+recall: in 32 bit system, sign takes up 1 bit, expoenent takes up 8 bits, mantissa takes up 23 bits
+### Exponents
+Q1: What is E when exponent = 0?
+- Ans: given bias 127 and exponent = E - bias, we say E = 127, which is 0b01111111 in binary
+
+Q2: What is E when exponent = 1?
+- Ans: given bias 127 and exponent = E - bias, we say E = 128, which is 0b10000000 in binary
+
+
 ## HW4: Bitwise and Logical Operators
 ### Interpretation
 What is the integer value stored in `signed char x = 0xE1;`?
