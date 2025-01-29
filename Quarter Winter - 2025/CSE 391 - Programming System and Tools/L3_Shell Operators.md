@@ -53,14 +53,17 @@ Difference between pipe and redirection
 ## Pre-Lecture Videos
 ### cut and parsing logs
 echo "abcdef" | cut -c4
-    - output (character 4 of the stdinpt): d
-echo "abcdef" | cut -c4-6
-    - output (character 4-6 of the stdinpt): def
-echo "abcdef" | cut -c1, 3, 5
-    - output (character 1,3,5 of the stdinpt): ace
+- output (character 4 of the stdinpt): d
 
-echo "a,b,c,d,e,f" | cut -d -f5
-    - output (1st char of the delimited stdinpt): a
+echo "abcdef" | cut -c4-6
+- output (character 4-6 of the stdinpt): def
+
+echo "abcdef" | cut -c1, 3, 5
+ - output (character 1,3,5 of the stdinpt): ace
+
+echo "a,b,c,d,e,f" | cut -d -f 5
+- output (1st char of the delimited stdinpt): a
+
 cut option:
 - -d, which denotes delimiter; only single character
 - -f#, which denotes the field #
@@ -110,5 +113,5 @@ Pipe:
 
 ;:
 - command1; command2
-    - run command1 and command2 cotinuosly yet independently
+    - run command1 and command2 continuously yet independently
         - ex.ls dir1; ls dir2
