@@ -1,4 +1,44 @@
-## HW7: Floating Point
+## HW7: x86-64 Programming Homework
+### Instructions
+Q1: What is the appropriate instruction suffix for:
+```
+mov_  (%rsi), %eax
+```
+- l (4 bytes)
+
+Q2: The following x86-64 instruction has an error in it:
+```
+movq %ebx, (%rdi)
+```
+Fix the instruction suffix to make the instruction work.
+- movl %ebx, (%rdi)
+
+
+Q3: Write the assembly instruction that stores the sum of the values in registers %rdi and %rax back into %rax.
+- addq %rdi, %rax
+
+
+Q4: Assuming that the register %rdi contains 8 bytes that constitute a valid address, write the x86-64 instruction to dereference this address and move two bytes from memory into the lowest portion of %rsi.
+- movw (%rdi), %si
+
+note:() denotes the dereference of the memory
+note: (src) to dest and src to (dest) differ by how memory is handled
+  - src to (dest): source value writes to location where (dest) is pointed at
+  - (src) to dest: src value is read and loads to the dest register/memory
+
+### Operands
+There are three types of assembly instruction operands:
+- Immediate – constant integer data
+- Register – data pulled from the contents of a register
+- Memory – consecutive bytes of memory pulled from a specified, calculated address
+
+Indicate data size of the following
+1. %dil: 1 byte
+2. -11: unknown
+3. %r14d: 4 bytes
+4. (%rax): unknown, for it is a memory operand; the amount of memory depedn on the operation that memory operand is part of 
+5. 0xDEAD: unknown, This is a 2-byte constant, but could still be extended to 4 bytes or 8 bytes depending on the operation
+## HW6: Floating Point
 ### FP Code
 ```c
 #include <stdio.h>

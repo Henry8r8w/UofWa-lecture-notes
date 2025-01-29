@@ -11,6 +11,7 @@ Example: If 0x80 is currently stored in %al:
 - movsbl %al, %ebx sets %ebx to 0xFFFFFF80 and %rbx to 0x00000000FFFFFF80
     - bit (1 byte) to long (4 bytes): 32 - 8 = 24
 Visual Representation:
+
 | Instruction       | Source (`%al`) | Destination (`%bx` or `%ebx`) | Explanation                                                                 |
 |--------------------|----------------|-------------------------------|-----------------------------------------------------------------------------|
 | `movzbw %al, %bx`  | `0x80`         | `0x0080`                      | Zero extension: Upper bits filled with `0`.                                |
