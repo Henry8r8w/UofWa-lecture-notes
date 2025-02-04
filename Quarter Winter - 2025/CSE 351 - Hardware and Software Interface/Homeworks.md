@@ -1,4 +1,124 @@
 
+## HW10: x86-64 Programming IV Homework
+### Loops
+Consider the following C code and their correspoding assembly
+```
+int foo(short n, int x) {
+  int counter = _____;
+  int result = _____;
+
+  while (counter _____) {
+    result = _____;
+    counter = _____;
+  }
+
+  return result;
+}
+
+
+# int foo (short n, int x)
+# n in %di, x in %esi
+foo: 
+  movl    $1, %eax  # Initialize %eax to 1
+  movl    $1, %edx  # Initialize %edx to 1
+  movswl  %di, %ecx # Sign-extend %di (n) to 32 bits and store in %ecx
+.L2:
+  cmpl    %esi, %edx # Compare %edx (counter) with %esi (x)
+  jge     .L5        # If %edx >= %esi, jump to .L5 (exit loop) from L2 and move to L5, the return statement
+  sall    %cl, %eax # shift arithimtic left  by %cl (1 byte/8 bits of %rcx (8 bytes), %ecx (4 bytes)) value 
+  addl    %edx, %edx # self add %edx
+  jmp     .L2
+.L5:
+  ret
+```
+note: jmp is the unconditional, which explicity specify where the go to after some operation has been made
+- jmp is used more often in a for loop and to do operation; it jmp less often appeared for a do-while loop, where condition written at the end of 
+
+```
+# Example of a `do-while` loop without `jmp`
+movl $0, %ecx          # Initialize counter
+.LoopStart:
+addl $1, %ecx          # Increment counter
+cmpl $10, %ecx         # Compare counter with 10
+jl   .LoopStart        # Jump back to start if counter < 10
+
+
+# Example of a loop without `jmp`
+movl $0, %ecx          # Initialize counter
+.LoopStart:
+cmpl $10, %ecx         # Compare counter with 10
+jl   .LoopBody         # Jump to loop body if counter < 10
+jmp  .LoopEnd          # Exit loop if counter >= 10
+.LoopBody:
+addl $1, %ecx          # Increment counter
+jmp  .LoopStart        # Jump back to start of loop
+.LoopEnd:
+```
+
+note: `cal` is a command of bit shift
+- example: let %eax: 1  (63 0s and 1 1) and %cl: 3 (6 0s and 2 1s), we get a 61 0s and a 100
+
+note: short encodes at the maximum of 2 bytes / 16 bits
+
+Q1: Which register holds the program value `result`?
+- %eax, due to x86-64 convention
+
+Q2: What is the initial value (in decimal) of `result`?
+- 1, from the initialization
+
+Q3: What is the test condition (i.e., the blank in the `while`-statement) for `counter`?
+- <x
+  - note: becuase the loop exit when  %edx  (counter) >= %esi(x), so the While-True condition would be counter < x
+
+Q4: What is the update statement (i.e., the blank in the while-statement) for result?
+- result << n
+
+Q5: What is the update statement (the blank inside the while-statement) for counter?
+- Ans: 2*counter
+## HW9: x86-64 Programming III Homework
+### Conditionals
+Q3: Equivalence
+
+Find an alternative first instruction for the x86-64 code below using test that does not change the behavior.
+```
+cmpq %rdi, $0
+je   MyLabel
+```
+- Ans: testq %rdi, %rdi
+  - note: since je checks for equal to 0 condition, if we test, ass a bitwise AND command, if the result is 0...0, then our ZF will tell us the information by 1 (yes), 0 (no)
+  - note: `orq %rdi, %rdi ` is also possible as we are asking for all 0s across the bits, so it is sensitiy to presence of zero
+Q2: Comparison
+
+Assuming that the value of the variable `int *p` is currently stored in `%rax`, which of the following choices is the C code equivalent of the following lines of assembly?
+
+```
+cmpl   (%rax), $351  # Compare (cmp) the 32-bit value (long/l) at the memory address in %rax with the immediate value 351
+setle  %dil         # Set %dil to 1 if the value at (%rax) <= 351, otherwise set %dil to 0
+```
+- Ans: (*p >- 351)
+
+
+
+
+
+Q1: Set
+
+Assume that %rax and %rbx both currently hold the value of -1.  We now execute the following instructions:
+```
+addq %rbx, %rax // -2 + (-2)
+setg %bl
+```
+What value (in hex, including the prefix) is now stored in %rbx?
+- Ans: 0xFFFFFFFFFFFFFF00
+
+
+note_1: recall how to convert hex with two complement
+- given positive number 2, you have 0...010 in binary that you flip the 0s and 1s to get -2 sucht that 1...101 is produced
+- Thus, 0x15F1E is your added %rbx, %rax
+  - note: four 1s give you one F, so there are 60 1s before there is a 1101, which renders one E
+
+note_2: setg sets the %bl (the lower 1 bit of %rbx) 1 if previous operation is greaeter than 0 for the 8 bits
+- recall that the addq has result a valu eless than 0; thus, the lower 8 bits become 0
 ## HW7: x86-64 Programming Homework
 ### Instructions
 Q1: What is the appropriate instruction suffix for:
