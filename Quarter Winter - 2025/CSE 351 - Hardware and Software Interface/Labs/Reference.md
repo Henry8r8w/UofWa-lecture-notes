@@ -1,3 +1,65 @@
+## Lab 2: Disassmebling and Defusing a Binary Bomb
+### Tips and Hints
+
+**x86-64 Calling Conventions**
+The x86-64 ISA passes the first six arguments to a function in the following registers (in order): %rdi, %rsi, %rdx, %rcx, %r8, and %r9. The return value of a function is passed in %rax.
+
+
+Lab 2 uses sscanf ("string scan format"), which is similiar to scanf but reads in data from a string instead of stdin:
+```
+char* mystring = "123, 456"; // our string input
+int a, b;
+sscanf(mystring, "%d, %d", &a, &b); // %d our string formater (decimal) to parse the string,  and stored at location a and b 
+```
+
+**Phase Context Hints**
+1. Comparison: Dr. Evil is a fan of inspiring (or not so inspiring) quotes.
+2. Loops: Phase 2 calls a function, then starts a loop. What inputs are required by the function? How is the loop using those inputs?
+3. Switch statements: Figure out what inputs are required. For each input, what values would cause a call to explode_bomb? Avoid those!
+4. Recursion: What are the initial arguments of the recursive function? How are they manipulated before the recursive call occurs? What do we do with the final value once we exit out of the recursive function?
+5.Pointers and arrays: Where are the arrays stored? What are their contents, and how are they being manipulated?
+6. Linked lists (extra)
+### Useful Commands
+**GDB**
+- `disas <function>` will display the disassembly of the specified function.
+- `break <line>`, where <line> can be specified as a line number, a function name, or an instruction address, will create and set a breakpoint.
+- `run defuser.txt` will run the bomb using defuser.txt as the command-line argument until it encounters a breakpoint or terminates.
+- `stepi <#> ` and `nexti <#>` will move forward by <#> assembly instructions (stepi will enter functions whereas nexti will go over functions). If omitted, <#> will default to 1.
+- `print /<f> <expr>`    will evaluate the expression <expr> and print out its value according to the format string <f>. The expression can use variable or register names. The format string can be omitted; see documentation for more details.
+
+**non GDB**
+- `objdump -t bomb > bomb_sym`: This will print out the bomb's symbol table into a file called bomb_sym. The symbol table includes the names of all functions and global variables in the bomb, the names of all the functions the bomb calls, and their addresses. You may learn something by looking at the function names!
+
+- `strings -t x bomb > bomb_strings`: This will print the printable strings in your bomb and their offsets within the bomb into into a file called bomb_strings.
+### Goal of the lab
+Learning to read assembly code as well as gaining familiarity with the debugger, we highly recommend a mixture of the two
+### Bomb description
+The bomb has 5 regular phases. The 6th phase is extra, and rumor has it that a secret 7th phase exists. The phases get progressively harder to defuse, but the expertise you gain as you move from phase to phase should offset this difficulty. 
+### Getting Started
+GDB debugger
+- gcc -g yourfile.c; first compile your c file
+- gdb somefile.out; open your gdb
+    - (gdb) break method_name; add break point to your method
+    - (gdb) run; you run the code until the break point
+        - (gdb) list; you see what the source code looks like
+        - (gdb) disas; you see the assmebly code
+`bomb` file will exist as a mystry file where you can gdb list it, but you probably won't see anything listed; disas won't do anything as well; but you can probe the `bomb` file using gbb break guess_method to know what methods the file contain
+
+(gdb) step walks through every single line of the source code
+
+(gdb) stepi; this walks thorugh line by line in the source code
+- (gdb) disas; this shows you at each line of your assmebly code
+
+**x/NUM SIZE FORMAT**
+x/s $register
+- you get a string representation binary
+
+x/2wx $register
+- you get the 2 num w size hex representation of binary
+
+To check if you found the key to defuse the bomb
+- ./bomb defuse.txt
+    - where defuse.txt is where you put the key candidate in after inspecting the bomb file
 ## Lab 1a: Pointers in C
 
 ### Getting Started
