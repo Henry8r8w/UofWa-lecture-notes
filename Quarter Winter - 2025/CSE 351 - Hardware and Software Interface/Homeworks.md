@@ -1,4 +1,346 @@
+## HW 16: Memory and Caches i
+### Cache Performance
+Assume we have a cache that starts cold
 
+We execute a short loop that results in the following access pattern: MHHMHHMH, where "M" is a Miss and "H" is a hit.
+
+Question 1: Based on the access pattern, how many cache blocks have been pulled/copied into the cache?
+- Ans: three, given three M
+
+Question 2: What is the Hit Rate (as a percentage, including the percentage sign '%') of this access pattern?
+- Ans: 5/8 given size(H)/ size(pattern)
+
+Question 3: If the cache has a Hit Time of 4 ns and it takes 200 ns to access data from Memory, what is the Average Memory Access Time of this set of accesses?
+- Ans:79 ns given AMAT = hit time (4ns) + miss rate  (3/8) x miss penalty (200)
+
+
+### IEC Prefixes
+
+| IEC   | Abbr | Size        | IEC   | Abbr | Size         |
+|-------|------|-------------|-------|------|-------------|
+| Kibi  | (Ki) | 2^10 ≈ 10^3   | Pebi  | (Pi) | 2^50 ≈ 10^15 |
+| Mebi  | (Mi) | 2^20 ≈ 10^6   | Exbi  | (Ei) | 2^60 ≈ 10^18 |
+| Gibi  | (Gi) | 2^30 ≈ 10^9   | Zebi  | (Zi) | 2^70 ≈ 10^21 |
+| Tebi  | (Ti) | 2^40 ≈ 10^12  | Yobi  | (Yi) | 2^80 ≈ 10^24 |
+
+Quetion 1: Write 2^58 addresses using IEC prefixes
+- Ans: 2^50 *2^8 = Pi*256 = 256Pi
+
+Quetion 2: Write 2^43 addresses using IEC prefixes
+- 2^3 *2^40 = 8 Ti
+
+## HW 15: Buffer Overflow Homework
+### Lab 3 prepration 
+**Sendstring**
+
+In the lab3 directory, there is a tool included called sendstring that will turn a string of hexadecimal characters into a string of bytes with those hexadecimal values.
+
+This allows us to generate input strings that contain non-printable characters (i.e., characters that we can't type) like 0xBE and 0xEF in the address 0x41BEEF.
+
+Noting that 0x30 to 0x39 are the hexadecimal codes for the digits 0-9 (e.g., 0x30 = '0', 0x35 = '5'), the following example usage generates the bytes for the string "351":
+```
+$ echo 33 35 31 00 | ./sendstring
+351
+```
+
+Find the comamdn to pipe into sendstring given an address 0x41BEEF using full address
+- ans: echo EF BE 41 00 00 00 00 00 | ./sendstring
+
+**Hex Viewer**
+Take the answer to the previous question and save the output into a file called exploit.bytes using the following template:
+
+$ echo ______ | ./sendstring > exploit.bytes
+Now open exploit.bytes in a text editor. You should see a lot of weird characters with an 'A' in the middle.
+
+This is because text editors are trying to interpret the file contents as text (e.g. ASCII or other specified encodings), but most of the bytes we used don't have corresponding printable characters other than 0x41, which happens to be 'A'.
+
+To verify that the file bytes are what we expect them to be, we want to use a "hex viewer".  Exit out of the text editor and use the following command:
+
+$ xxd exploit.bytes
+This will show us the hex codes of all the bytes in the file. You should now be able to visually recognize the hex digits we passed to sendstring, however, there is an extra byte at the end.
+
+What character does this byte represent? (give the C character literal, including the surrounding single quotes, e.g., 'a' or '\0')
+
+- '\n' using man ascii to idenfiy 0A correspodance
+### Prevention
+Say we are reading input into a buffer on the stack using gets(), how can we prevent a buffer overflow?
+
+Ans: limit the number of characters that can be read in, using something like fgets()
+
+
+
+### Stack Layout
+If we overwrite bytes past the current stack frame's stored return address, which of the following parts of the caller's stack frame will we overwrite first that may cause problems for the execution of the caller?
+
+
+Ans: Saved caller-saved register values
+
+Recall that a stack frame will typically be ordered (from highest to lowest addresses):
+- return address
+- callee-saved register values
+- local variables
+- caller-saved register values
+- argument build
+
+However, the argument build section contains values needed by the callee and won't affect the execution of the caller.  But the caller-saved register values will be "restored" and popped off the stack to be used once the caller regains control, so changing those values will affect the caller's computations
+
+### Bytes
+Consider the following C code:
+```
+void foo() {
+  char buf[8];
+  gets(buf);
+}
+```
+Assume that the return address saved in the current stack frame (in a little-endian machine) is currently 0x400CEF.
+
+If we overwrite this return address to be 0x41BEEF, what is the minimum number of bytes written by gets()?
+
+Ans:
+- going from (little-endian rep) EF 0C 40 00  to EF BE 41 00, you need the lower three bytes change, the 0C 40 00 <-> BE 41 00; given each writing we have a null terminator, so a 0x00 will be written, whcih adds one more byte. The answer should be 12 bytes
+  - note: recall byte deifniton being 8 bits (and 0-F can only be reprsented by 4 bits)
+
+### Strings
+Suppose that we use gets() to take the string "1234567" from the console/terminal.
+
+What will be the value of the last byte written by gets()? Answer in hex (including prefix)
+
+- 0x00 (using ASCII(hex) conversion of \0)
+### Adresses
+Suppose we write 8 bytes into a character buffer starting at 0x7FFFFFFFB4C0, what address will the 1st byte be and what will the 8th byte be?
+- 0x7FFFFFFFB4C0 , 0x7FFFFFFFB4C7
+## HW 14: Struct Homework
+### Structs in Assembly
+Q1: 
+```
+// Suppose we have this sammy function and init_sammy
+struct sammy {
+   int* x;               // offset 0 (pointer:8 bytes)
+   struct {
+      short s[2];        // s[0] at offset 8, s[1] at offset  (short:2 bytes)
+      int i;             // offset 12 (int:4 bytes)
+   } wolfy;
+   struct sammy* next;    // offset 16 (pointer8 bytes)
+};
+
+
+void init_sammy(struct sammy* ss) {
+   ss->wolfy.s[1] = /* SNIPPET 1 */; // note: -> performs dereferencing
+   ss->x = /* SNIPPET 2 */;// store address ss into i: &ss->wolfy.i
+   ss->next = /* SNIPPET 3 */;
+}
+// And that the compilter geenrate the following assembly code for inint_sammy
+init_sammy:             # Entry point of init_sammy function
+   movw 8(%rdi), %ax    # (2 bytes) Load ss->wolfy.s[0] from offset 8 into %ax
+   movw %ax, 10(%rdi)   # (2 bytes) Store the 2-byte value from %ax into ss->wolfy.s[1] at offset 10
+
+   leaq 12(%rdi), %rax  # Compute the effective address of ss->wolfy.i (offset 12); result in %rax
+   movq %rax, (%rdi)    # (8 bytes) Store the 8-byte pointer in %rax into ss->x at offset 0
+
+
+   movq %rdi, 16(%rdi)  # (8 bytes) Store the 8-byte pointer (ss) from %rdi into ss->next at offset 16
+   retq                 # Return from the function
+note: %rdi is our case holds the pointer to the entire strucutre of ss of the struct, where we compute address of subsequent of its members by leveraging the offset calculation
+
+note: #(reg) tells x86-64 to access memory at the address based on # offsert from the register
+note: w in assmebly
+```
+Q1: Based on the aassembly code init_sammy, fill in the missing C code for SNIPPET 1
+- ss->wolfy.s[1] =  ss->wolfy.s[0];
+```
+movw 8(%rdi), %ax    # (2 bytes) Load ss->wolfy.s[0] from offset 8 into %ax
+movw %ax, 10(%rdi)   # (2 bytes) Store the 2-byte value from %ax into ss->wolfy.s[1] at offset 10
+```
+
+Q2: Based on the assembly code for init_sammy, fill in the missing C code for SNIPPET 3
+- ss->next = ss;
+
+Q3: If we add the following line to the end of init_sammy, what line of assembly code will be generated?
+```
+ss->wolfy.i = 18;
+```
+- movl $18, 12(%rdi) operation, for we have type int (byte size of 4: 4*8bits)
+  - note: l is used in 32 bits
+  
+### Struct Layout
+Q1: Take the following instnace `rec` of `struct`, and `foo_st`
+```
+struct foo_st {
+   char  *a; // 8 (pointer)
+   short  b; // 2
+   double c; // 8
+   char   d; // 1
+} rec;
+
+```
+- offset 0  to get 8 (+8), offset from 8 to 10 (+2) and pad to get 16, offset from 16 to 24 (+8), offset from 24 to 25 and padd to 32
+
+Q2: How many bytes of `rec` are internal fragmentation
+- the sum of internal padding: 6
+
+Q2: How many bytes of `rec` are external fragmentation
+- the sum of internal padding: 7
+
+## HW 13
+### Compiling 
+Q2: One can use Compiler Explorer for the translationi between C and assembly
+On the left half of the window, the upper-right has a drop-down menu for source language. Make sure that C is selected.
+
+On the right half of the window, there is a drop-down menu in the upper-left to choose your compiler. Make sure this is set to x86-64 and choose the version of gcc nearest to the one you found in the question above.
+
+Just below the drop-down menu is a set of buttons. Under the Output... settings, make sure only Demangle identifiers is selected. Under the Filter... settings, make sure everything except Horizontal whitespace is selected
+
+## HW12: Procedures & Recursion Homework
+```
+long fib (unsigned long n) {
+  if (n < 2)
+    return 1;
+  return fib(n - 2) + fib(n - 1);
+}
+
+	.data
+.LC0:	.string	"fib(0) = %ld, expecting 1\n"
+.LC1:	.string	"fib(1) = %ld, expecting 1\n"
+.LC2:	.string	"fib(2) = %ld, expecting 2\n"
+.LC3:	.string	"fib(4) = %ld, expecting 5\n"
+.LC4:	.string	"fib(6) = %ld, expecting 13\n"
+.LC5:	.string "REGISTER SAVING CONVENTION ERROR DETECTED!\n(this message does not catch all cases)\n"
+
+	.text
+fib:
+	cmpq	$1, %rdi
+	ja	.L8
+	movl	$1, %eax
+	ret
+.L8:
+	movq	%rdi, %rbx
+	leaq	-2(%rdi), %rdi
+	call	fib
+	movq	%rax, %rbp
+	leaq	-1(%rbx), %rdi
+	call	fib
+	addq	%rbp, %rax
+	ret
+
+# ===============================================================
+# you do NOT need to read or understand anything below this point
+# ===============================================================
+
+	.globl	main
+	.type	main, @function
+main:
+	subq	$8, %rsp
+	movq	$-1, %rbx
+	movq	$-1, %rbp
+	movl	$0, %edi
+	call	fib
+	movq	%rax, %rdx
+	leaq	.LC0(%rip), %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	movl	$1, %edi
+	call	fib
+	movq	%rax, %rdx
+	leaq	.LC1(%rip), %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	movl	$2, %edi
+	call	fib
+	movq	%rax, %rdx
+	leaq	.LC2(%rip), %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	movl	$4, %edi
+	call	fib
+	movq	%rax, %rdx
+	leaq	.LC3(%rip), %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	movl	$6, %edi
+	call	fib
+	movq	%rax, %rdx
+	leaq	.LC4(%rip), %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	cmpq	$-1, %rbx
+	jne	.L7
+	cmpq	$-1, %rbp
+	jne	.L7
+.L6:
+	movl	$0, %eax
+	addq	$8, %rsp
+	ret
+.L7:
+	leaq	.LC5(%rip), %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	jmp	.L6
+```
+Run the gcc -o fib fib.s and answer the following questions
+
+Q1: What is the first argument to fib shown that produces an incorrect
+
+- rdi (n - 1), rbx (rdi saved in rbx), rbp (rax stores in rbp), rax (rbp stores in rax)
+## HW11: The Stack & Procedures Homework
+### F Trace 1
+```
+f:
+    cmpq    $-12, %rsi
+    jne    .L2
+    movq    %rsi, %rax
+    movq    %rdi, %rsi
+    movq    %rax, %rdi
+    call    f
+    ret
+.L2:
+    addq    $1, %rdi
+    movq    %rsi, %rax
+    imulq   %rdi, %rax
+    ret
+
+
+
+long f(long x, long y) {
+  if (y == <cond>)
+    return f(<farg1>, <farg2>);
+  return <ret>; 
+}
+```
+Suppose f is called with -2 in %rdi and 3 in %rsi. Give the values of the following registers just before f returns
+- %rdi: 
+### F Code
+```
+f:
+    cmpq    $-12, %rsi    # Compare x with -12
+    jne     .L2           # If x != -12, jump to .L2
+    movq    %rsi, %rax    # Move x to rax
+    movq    %rdi, %rsi    # Move y to rsi
+    movq    %rax, %rdi    # Move x to rdi
+    call    f             # Recursive call f(y, x)
+    ret                   # Return result
+
+.L2:
+    addq    $1, %rdi      # y + 1
+    movq    %rsi, %rax    # Move x to rax
+    imulq   %rdi, %rax    # Multiply (y + 1) * x
+    ret                   # Return result
+
+long f(long x, long y) {
+  if (y == <cond>)
+    return f(<farg1>, <farg2>);
+  return <ret>; 
+}
+```
+- <Cond>: -12
+- <farg1>: y
+- <farg2>: x
+- <ret>: (x + 1)*y
 ## HW10: x86-64 Programming IV Homework
 ### Loops
 Consider the following C code and their correspoding assembly

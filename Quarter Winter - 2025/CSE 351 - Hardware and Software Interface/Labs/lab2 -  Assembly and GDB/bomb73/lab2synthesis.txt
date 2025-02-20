@@ -1,0 +1,26 @@
+*****************************
+* Lab 2 Synthesis Questions *
+*****************************
+Name(s):Henry Wang  
+NetID(s):2141746
+
+
+-----------------------------------------------------------
+1) &value:52
+   &array:48 
+-----------------------------------------------------------
+2) Init:   <fillArray+40>
+   Update: <fillArray+146>
+-----------------------------------------------------------
+3) String address:0x4020a2 
+   Part of memory: .rodata 
+   Assembly instruction address: <part_2+8>
+-----------------------------------------------------------
+4) Strategy + example:
+- nexti, x /specifier, disas
+- i think th
+-----------------------------------------------------------
+5) Difficulty + why (past experience):
+- recursion wallthrough, becuase the jump
+-----------------------------------------------------------
+
